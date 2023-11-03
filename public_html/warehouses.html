@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script src="js/script.js"></script>
+  <title>Warehouses | Renewable Energy Systems Supply</title>
+</head>
+<body>
+  <header>
+    <h1>Renewable Energy Systems Supply</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Parts</a></li>
+        <li><a href="energy-systems.html">Energy Systems</a></li>
+        <li><a href="ship-receive.html">Shipping & Receiving</a></li>
+        <li><a href="warehouses.html">Warehouses</a></li>
+      </ul>
+    </nav>
+    <h2>Warehouses</h2>
+    <div class="page-description">
+      Information about our warehouses.
+    </div>
+  </header>
+  
+  <main>
+
+    <div class="warehouses-list">
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>Warehouse ID</th>
+            <th>Street Address</th>
+            <th>Street Address 2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zipcode</th>
+            <th>Phone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>123 Windy Ave.</td>
+            <td></td>
+            <td>Austin</td>
+            <td>Texas</td>
+            <td>12345</td>
+            <td>1234567890</td>
+            <td><a href="#" onclick="displayForm('edit-warehouse')">Edit</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>456 Gusty Blvd.</td>
+            <td></td>
+            <td>Portland</td>
+            <td>Oregon</td>
+            <td>54321</td>
+            <td></td>
+            <td>Edit</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>789 Breezy St.</td>
+            <td></td>
+            <td>New Orleans</td>
+            <td>Louisiana</td>
+            <td>13579</td>
+            <td>5432109876</td>
+            <td>Edit</td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+
+      <div id="edit-warehouse" class="hide-on-pageload">
+        <h2>Edit Warehouse Data</h2>
+
+        <table>
+          <form>
+          <thead>
+            <tr>
+              <th>Street Address</th>
+              <th>Street Address 2</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Zipcode</th>
+              <th>Phone</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" required value="123 Windy Ave." />
+              </td>
+              <td>
+                <input type="text" value="" />
+              </td>
+              <td>
+                <input type="text" required value="Austin" />
+              </td>
+              <td>
+                <input type="text" required value="Texas" />
+              </td>
+              <td>
+                <input type="number" required value="12345" />
+              </td>
+              <td>
+                <input type="number" required value="1234567890" />
+              </td>
+              <td>
+                <button onclick="hideForm('edit-warehouse')">Submit</button>
+                <button onclick="hideForm('edit-warehouse')">Cancel</button>
+              </td>
+            </tr>
+          </tbody>
+          </form>
+          </table>
+      </div>
+      
+      <div id="display-all-forms">
+        <button onclick="displayAllForms('hide-on-pageload')">Display All Tables</button>
+      </div>
+  
+  </main>
+
+</body>
+</html>

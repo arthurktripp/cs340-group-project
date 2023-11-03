@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bebas+Neue&display=swap');
+
+
+
+/**** Sections Styles ****/
+html, body {
+	min-height: 100%;
+	background: #fffffc;
+	color: #000;
+  font-size: 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+nav {
+  display: inline-block;
+}
+nav li {
+  display: inline;
+  padding: 1em 1.5em;
+  background-color: #a3e1c4;
+}
+nav li:hover {
+  background-color: #7ed5ac;
+}
+nav a {
+  color: #333;
+  text-decoration: none;
+}
+
+header {
+  padding: 1em 2em;
+}
+main {
+  padding: 1em 2em; 
+}
+	
+/**** Text Styles ****/	
+
+h1 {
+	font-size: 2em;
+}
+h2 {
+  font-size: 1.2em;
+}	
+p { 
+ color: #333;
+} 
+
+/**** Other Element Styles ****/
+table {
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+td {
+	padding: .5em;
+  vertical-align: top;
+}
+th {
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-right: 3px;
+  background-color: #a3e1c4;
+}
+
+select.filter {
+  padding: .5em 1em;
+  font-size: 1em;
+  border: solid 2px;
+  border-color: #333;
+  margin: .5em;
+}
+
+div.inline-buttons {
+  display: inline;
+}
+
+div.hide-on-pageload {
+  display: none;
+}
+
+#display-all-forms {
+  position:absolute;
+  right: 2em;
+  top: 2em;
+}

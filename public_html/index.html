@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script src="js/script.js"></script>
+  <title>Current Parts Inventory | Renewable Energy Systems Supply</title>
+</head>
+<body>
+  <header>
+    <h1>Renewable Energy Systems Supply</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Parts</a></li>
+        <li><a href="energy-systems.html">Energy Systems</a></li>
+        <li><a href="ship-receive.html">Shipping & Receiving</a></li>
+        <li><a href="warehouses.html">Warehouses</a></li>
+      </ul>
+    </nav>
+    <h2>Parts Inventory</h2>
+    <div class="page-description">
+      Check what is currently in stock.
+    </div>
+  </header>
+  
+  <main>
+
+
+    <form action="filter_by_category" onchange="this.form.submit();">
+      <label>Part Category: </label>
+      <select id="category">
+        <option value="*">All</option>
+        <option value="1">Battery</option>
+        <option value="2">Cable</option>
+        <option value="3">Solar Panel</option>
+      </select>
+    </form>
+
+    <div class="parts-list">
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>PartID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th># in Stock</th>
+            <th>Cost</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Small Battery</td>
+            <td></td>
+            <td>100</td>
+            <td>$50.49</td>
+            <td>Battery</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Standard Cable</td>
+            <td>Used to connect various parts</td>
+            <td>300</td>
+            <td>$20.99</td>
+            <td>Cable</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Small Solar Panel</td>
+            <td></td>
+            <td>50</td>
+            <td>$15.97</td>
+            <td>Solar Panel</td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+      
+
+      <div id="display-all-forms">
+        <button onclick="displayAllForms('hide-on-pageload')">Display All Tables</button>
+      </div>
+  
+  </main>
+
+</body>
+</html>
