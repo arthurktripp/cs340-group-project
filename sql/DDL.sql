@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS SystemParts;
 -- create the EnergySystems table
 CREATE TABLE EnergySystems (
     systemID INT(11) NOT NULL AUTO_INCREMENT,
-    systemName VARCHAR(255) NOT NULL,
+    systemName VARCHAR(255) NOT NULL UNIQUE,
     systemDescription VARCHAR(500),
     estimatedInstallTime INT(11),
     estimatedCustomerIncome INT(11),
@@ -30,7 +30,7 @@ CREATE TABLE EnergySystems (
 -- create the PartCategories table
 CREATE TABLE PartCategories (
     categoryID INT(11) NOT NULL AUTO_INCREMENT,
-    categoryName VARCHAR(255) NOT NULL,
+    categoryName VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (categoryID)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE Warehouses (
     phoneNumber VARCHAR(15),
     addressLine1 VARCHAR(255) NOT NULL,
     addressLine2 VARCHAR(255),
-    cityLocation VARCHAR(255) NOT NULL,
+    cityLocation VARCHAR(255) NOT NULL UNIQUE,
     stateLocation VARCHAR(255) NOT NULL,
     zipCode VARCHAR(9) NOT NULL,
     PRIMARY KEY (warehouseID)
@@ -49,7 +49,7 @@ CREATE TABLE Warehouses (
 -- create the Parts table
 CREATE TABLE Parts (
     partID INT(11) NOT NULL AUTO_INCREMENT,
-    partName VARCHAR(255) NOT NULL,
+    partName VARCHAR(255) NOT NULL UNIQUE,
     partDescription VARCHAR(500),
     stockTotal INT(11) NOT NULL,
     partCost DECIMAL(5,2) NOT NULL,

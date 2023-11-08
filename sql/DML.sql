@@ -63,6 +63,14 @@ INSERT INTO Warehouses
 		:stateLocationInput, 
 		:zipCodeInput);
 -- update not needed
+UPDATE Warehouses
+SET phoneNumber = :partDescriptionInput, 
+	addressLine1 = :addressLine1Input, 
+	addressLine2 = :addressLine2Input, 
+	cityLocation = :cityLocationInput, 
+	stateLocation = :warehouseIDInput,
+	zipCode = :zipCodeInput
+WHERE partName = :partNameInput;
 -- delete not needed
 
 
@@ -109,12 +117,12 @@ INSERT INTO Parts
 		:warehouseIDInput);
 -- update not needed
 UPDATE Parts
-SET partDescription:partDescriptionInput, 
-	stockTotal:stockTotalInput, 
-	partCost:partCostInput, 
-	categoryID:categoryIDInput, 
-	warehouseID:warehouseIDInput
-WHERE partName:partNameInput;
+SET partDescription = :partDescriptionInput, 
+	stockTotal = :stockTotalInput, 
+	partCost = :partCostInput, 
+	categoryID = :categoryIDInput, 
+	warehouseID = :warehouseIDInput
+WHERE partName = :partNameInput;
 
 -- delete
 DELETE FROM Parts 
