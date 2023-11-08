@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script src="js/script.js"></script>
+  <title>Current Parts Inventory | Renewable Energy Systems Supply</title>
+</head>
+<body>
+  <header>
+    <div class="company-title">
+      <h1>Renewable Energy Systems Supply</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Parts</a></li>
+        <li><a href="energy-systems.html">Energy Systems</a></li>
+        <li><a href="part-categories.html">Categories</a></li>
+        <li><a href="warehouses.html">Warehouses</a></li>
+      </ul>
+    </nav>
+    <h2>Energy Systems</h2>
+    <div class="page-description">
+      Manage the Energy Systems that we can assemble and sell. The number available is based on current inventories of necessary parts.
+    </div>
+  </header>
+  
+  <main>
+
+
+    <div class="create-new-system">
+      <button onclick="displayForm('energy-systems-create')">Create New System</button>
+    </div>
+
+    <div id="energy-systems-list">
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Small Solar</td>
+            <td>This is a small solar system</td>
+            <td><a href="#" onclick="displayForm('energy-systems-details')">Details</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Medium Solar</td>
+            <td>This is a medium solar system</td>
+            <td>Details</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Big Solar</td>
+            <td>This is a large solar system</td>
+            <td>Details</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div id="energy-systems-details"  class="hide-on-pageload">
+      <h2>
+        System Details
+      </h2>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Install Time</th>
+            <th>Customer Income</th>
+            <th>Number Available</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Small Solar</td>
+            <td>This is a small solar system</td>
+            <td>60</td>
+            <td>100</td>
+            <td>50</td>
+            <td>
+              <a href="#" onclick="displayForm('energy-systems-edit'); hideForm('energy-systems-details')">Edit</a>
+            </td>
+
+          </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <div id="energy-systems-edit" class="hide-on-pageload">
+      <h2>
+        Edit System Details
+      </h2>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Install Time</th>
+            <th>Customer Income</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <form>
+            <tr>
+              <td>1</td>
+              <td>
+                <input type="text" id="system-name" value="Small Solar" />
+              </td>
+              <td>
+                <textarea id="sys_description" rows="4">This is a small solar system</textarea>
+              </td>
+              <td>
+                <input type="number" id="install_time" value="60" />
+              </td>
+              <td>
+                <input type="number" id="customer_income" value="100" />
+              </td>
+              <td>
+                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Save</button>
+              </td>
+              <td>
+                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Cancel</button>
+              </td>
+              <td>
+                <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
+              </td>
+            </tr>
+          </form>
+        </tbody>
+        </table>
+    </div>
+
+    <div id="energy-systems-create" class="hide-on-pageload">
+      <h2>
+        Create a New Energy System
+      </h2>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Install Time</th>
+            <th>Customer Income</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <form>
+            <tr>
+              <td>
+                <input type="text" id="system-name" required />
+              </td>
+              <td>
+                <textarea id="sys_description" rows="4"></textarea>
+              </td>
+              <td>
+                <input type="number" id="install_time" />
+              </td>
+              <td>
+                <input type="number" id="customer_income" />
+              </td>
+              <td>
+                <button onclick="hideForm('energy-systems-create')">Save</button>
+              </td>
+              <td>
+                <button onclick="hideForm('energy-systems-create')">Cancel</button>
+              </td>
+            </tr>
+          </form>
+        </tbody>
+        </table>
+    </div>
+    
+      
+
+    <div id="display-all-forms">
+      <button onclick="displayAllForms('hide-on-pageload')">Display All Tables</button>
+    </div>
+
+  </main>
+
+</body>
+</html>
