@@ -152,4 +152,6 @@ INSERT INTO SystemParts
 	VALUES (:systemIDInput, :partIDInput);
 
 -- update not needed
--- delete not needed
+-- delete...just in case
+DELETE FROM SystemParts
+WHERE partID = :partIDInput AND systemID = :systemIDInput;
