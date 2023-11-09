@@ -29,7 +29,9 @@
   <main>
     <h2>Energy Systems</h2>
     <div class="page-description">
-      Manage the Energy Systems that we can assemble and sell. The number available is based on current inventories of necessary parts.
+      Manage the Energy Systems that we can assemble and sell.<br>
+      The number available is based on current inventories of necessary parts.<br>
+      From a system's details view, click edit to change elements like the description or parts necessary parts, or delete the system entirely. 
     </div>
 
     <div class="create-new-system">
@@ -58,13 +60,13 @@
             <td>2</td>
             <td>Medium Solar</td>
             <td>This is a medium solar system</td>
-            <td><button>Details</button></td>
+            <td><button class="inactive">Details</button></td>
           </tr>
           <tr>
             <td>3</td>
             <td>Big Solar</td>
             <td>This is a large solar system</td>
-            <td><button>Details</button></td>
+            <td><button class="inactive">Details</button></td>
           </tr>
         </tbody>
       </table>
@@ -149,6 +151,15 @@
                 <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
               </td>
             </tr>
+            <tr>
+              <td colspan="5" >
+                <div class="parts-checks">
+                  <div><input type="checkbox" checked><label>Small Battery</label></div>
+                  <div><input type="checkbox" checked><label>Small Solar Panel</label></div>
+                  <div><input type="checkbox" checked><label>Standard Cable</label></div>
+                </div>  
+              </td>
+            </tr>
           </form>
         </tbody>
         </table>
@@ -166,7 +177,6 @@
             <th>Description</th>
             <th>Install Time</th>
             <th>Customer Income</th>
-            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -187,9 +197,16 @@
               </td>
               <td>
                 <button onclick="hideForm('energy-systems-create')">Save</button>
-              </td>
-              <td>
                 <button onclick="hideForm('energy-systems-create')">Cancel</button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="5" >
+                <div class="parts-checks">
+                  <div><input type="checkbox"><label>Small Battery</label></div>
+                  <div><input type="checkbox"><label>Small Solar Panel</label></div>
+                  <div><input type="checkbox"><label>Standard Cable</label></div>
+                </div>  
               </td>
             </tr>
           </form>

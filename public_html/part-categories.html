@@ -32,9 +32,21 @@
     <div class="page-description">
       Add or edit categories to keep the parts inventory organized. 
     </div>
-
-    <div class="new-parts-category inline-buttons">
-      <button onclick="displayForm('create-new-category')">New Parts Category</button>
+    
+    <div>
+      <div class="new-parts-category inline-buttons">
+        <button onclick="displayForm('create-new-category')">New Parts Category</button>
+      </div>
+      
+      <div id="create-new-category" class="hide-on-pageload">
+        <h2>Create New Parts Category</h2>
+        <form>
+          New Category Name: 
+          <input type="text" required>
+          <button onclick="hideForm('create-new-category')">Submit</button>
+          <button onclick="hideForm('create-new-category')">Cancel</button>
+        </form> 
+      </div>
     </div>
 
     <div id="parts-categories">
@@ -63,15 +75,7 @@
     </div>
     
     
-    <div id="create-new-category" class="hide-on-pageload">
-      <h2>Create New Parts Category</h2>
-      <form>
-        New Category Name: 
-        <input type="text" required>
-        <button onclick="hideForm('create-new-category')">Submit</button>
-        <button onclick="hideForm('create-new-category')">Cancel</button>
-      </form> 
-    </div>
+    
     
       
 
