@@ -1,0 +1,6 @@
+/node_modules
+db-connector.js
+*.env
+*.env.example
+*.env.local
+*.env.staging
