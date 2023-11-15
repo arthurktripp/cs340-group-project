@@ -2,6 +2,8 @@
   {{> nav}}
 </header>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <main>
   <h2>Parts Inventory</h2>
     <div class="page-description">
@@ -25,7 +27,7 @@
 
     </div>
 
-<table id="selectFromParts">
+<table id="part-table">
   <thead>
     <tr>
       {{#each data.[0]}}
@@ -38,7 +40,7 @@
   </thead>
   <tbody>
     {{#each data}}
-      <tr>
+      <tr data-value={{this.ID}}>
         <td>{{this.ID}}</td>
         <td>{{this.Name}}</td>
         <td>{{this.Description}}</td>
@@ -47,11 +49,12 @@
         <td>{{this.Category}}</td>
         <td>{{this.Warehouse}}</td>
         <td><button onclick="displayForm('edit-part')">Update Stock</button></td>
-        <td><button>Delete</button></td>
+        <td><button onclick="deletePart({{this.ID}})">Delete</button></td>
       </tr>
     {{/each}}
   </tbody>
 </table>
+<script src="./js/delete-part.js"></script>
 
 <div id="edit-part" class="hide-on-pageload">
   <h2>Edit Part Details</h2>
@@ -102,7 +105,7 @@
               <option selected disabled></option>
               <!-- ATTENTION: this should be a separate query; it currently lists the categories from each part, duplicating some parts -->
               {{#each data}}
-                <option value="this.Categories.categoryID">{{Category}}</option>
+                <option value="{{this.Categories.categoryID}}">{{this.Category}}</option>
               {{/each}}
             </select>
           </td>

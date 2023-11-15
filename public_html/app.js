@@ -9,7 +9,7 @@
 // EXPRESS
 var express = require('express'); 
 var app = express();
-PORT = 9338;
+PORT = 9794;
 
 // HANDLEBARS
 const { engine } = require('express-handlebars');
@@ -79,6 +79,25 @@ app.post('/add-part-form', function(req, res)
         }
     })
 });
+
+app.delete('/delete-part-ajax/', function(req,res,next){
+  let data = req.body;
+  let partID = parseInt(data.partID);
+  let query1 = `DELETE FROM Parts WHERE partID = ?`;
+
+        // Run the 1st query
+        db.pool.query(query1, [partID], function(error, rows, fields){
+            if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+            else
+            {
+                res.sendStatus(204);
+            }
+})});
 
 // ----- NEEDS WORK ----- //
 /* app.get('/part-categories', function(req, res) {
