@@ -1,0 +1,129 @@
+<header>
+  {{> nav}}
+</header>
+
+<main>
+  <h2>Parts Inventory</h2>
+    <div class="page-description">
+      View and add parts that we stock in our warehouses, and update their quantities as you ship and receive orders.
+    </div> 
+
+  <div id="page-options">
+      <form class="db-filter" action="filter_by_category" onchange="this.form.submit();">
+        <label>Filter by Category: </label>
+        <select id="category">
+          <option value="%">All</option>
+          {{#each data}}
+            <option value="{{this.categoryID}}">{{this.Category}}</option>
+          {{/each}}
+        </select>
+      </form>
+
+      <div class="new-part inline-buttons">
+        <button onclick="displayForm('create-part')">Add New Part</button>
+      </div>
+
+    </div>
+
+<table id="selectFromParts">
+  <thead>
+    <tr>
+      {{#each data.[0]}}
+      <th>
+        {{@key}}
+      </th>
+      {{/each}}
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>{{this.ID}}</td>
+        <td>{{this.Name}}</td>
+        <td>{{this.Description}}</td>
+        <td>{{this.Stock}}</td>
+        <td>{{this.Cost}}</td>
+        <td>{{this.Category}}</td>
+        <td>{{this.Warehouse}}</td>
+        <td><button onclick="displayForm('edit-part')">Update Stock</button></td>
+        <td><button>Delete</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<div id="edit-part" class="hide-on-pageload">
+  <h2>Edit Part Details</h2>
+  <!-- table structure created with tablesgenerator.com-->
+    <form>
+      <label for="">Small Battery Quantity: </label>
+      <input type="number" value="100">
+          
+      <button onclick="hideForm('edit-part')">Save</button>
+      <button onclick="hideForm('edit-part')">Cancel</button>
+          
+    </form>
+  </table>
+</div>
+
+<div id="create-part" class="hide-on-pageload">
+  <h2>Create New Part</h2>
+  <!-- table structure created with tablesgenerator.com-->
+  <table>
+    <form id="add-part-form" method="POST" action="/add-part-form">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Initial Stock</th>
+          <th>Cost</th>
+          <th>Category</th>
+          <th>Warehouse</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" name="input-partName" id="input-partName">
+          </td>
+          <td>
+            <textarea name="input-partDescription" id="input-partDescription"></textarea>
+          </td>
+          <td>
+            <input type="number" name="input-stockTotal" id="input-stockTotal">
+          </td>
+          <td>
+            <input type="number" name="input-partCost" id="input-partCost">
+          </td>
+          <td>
+            <select name="input-categoryID" id="input-categoryID">
+              <option selected disabled></option>
+              <!-- ATTENTION: this should be a separate query; it currently lists the categories from each part, duplicating some parts -->
+              {{#each data}}
+                <option value="this.Categories.categoryID">{{Category}}</option>
+              {{/each}}
+            </select>
+          </td>
+          <td>
+            <select name="input-warehouseID" id="input-warehouseID" required>
+              <option selected disabled></option>
+              {{#each data}}
+                <option value="{{this.Warehouses.warehouseID}}">{{this.Warehouse}}</option>
+              {{/each}}
+            </select>
+          </td>
+          <td>
+            <input type="submit" value="Save">
+            <button onclick="hideForm('create-part')">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </form>
+  </table>
+</div>
+
+
+
+</main>

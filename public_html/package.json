@@ -1,0 +1,19 @@
+{
+  "name": "cs340-group-project",
+  "version": "1.0.0",
+  "description": "Database and Website project for CS340",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "auto": "npx nodemon app.js"
+  },
+  "author": "Arthur Tripp & Liam Robbins",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "forever": "^4.0.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.0.1"
+  }
+}
