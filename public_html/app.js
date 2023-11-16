@@ -41,13 +41,27 @@ app.get('/', function(req, res){
                   partCost as "Cost",
                   PartCategories.categoryName as "Category",
                   Warehouses.cityLocation as "Warehouse",
-                  PartCategories.categoryID,
-                  Warehouses.warehouseID
+                  PartCategories.categoryID as "",
+                  Warehouses.warehouseID as ""
                 FROM Parts
                 JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
                 JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;`;
+
+  let query2 = `SELECT * FROM PartCategories`;
+  let query3 = `SELECT 
+                  warehouseID as "ID",
+                  cityLocation as "City"
+                FROM Warehouses`;
   db.pool.query(query1, function(error, rows, fields){ 
-    res.render('index', {data: rows});
+    let data = rows;
+    db.pool.query(query2, function(error, rows, fields){ 
+      let categories = rows;
+        db.pool.query(query3, function(error, rows, fields){ 
+          let warehouses = rows;
+          // console.log(categories);
+            res.render('index', {data: data, categories: categories, warehouses: warehouses});
+        })
+    })
   })
 });
 
@@ -77,6 +91,28 @@ app.post('/add-part-form', function(req, res)
         {
             res.redirect('/');
         }
+    })
+});
+
+app.post('/edit-part-form', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    let query1 = `UPDATE Parts SET stockTotal = ${data['input-stockTotal']} WHERE partID = ${data['input-partID']}`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+      if (error) {
+
+      // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+      console.log(error);
+      res.sendStatus(400);
+      }
+      else
+      {
+          res.redirect('/');
+      }
     })
 });
 

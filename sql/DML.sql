@@ -117,12 +117,8 @@ INSERT INTO Parts
 		:warehouseIDInput);
 -- update not needed
 UPDATE Parts
-SET partDescription = :partDescriptionInput, 
-	stockTotal = :stockTotalInput, 
-	partCost = :partCostInput, 
-	categoryID = :categoryIDInput, 
-	warehouseID = :warehouseIDInput
-WHERE partName = :partNameInput;
+SET stockTotal = :partTotalInput
+WHERE partID = :partIDInput;
 
 -- delete
 DELETE FROM Parts 

@@ -59,12 +59,18 @@
 <div id="edit-part" class="hide-on-pageload">
   <h2>Edit Part Details</h2>
   <!-- table structure created with tablesgenerator.com-->
-    <form>
-      <label for="">Small Battery Quantity: </label>
-      <input type="number" value="100">
-          
+    <form id="edit-part-form" method="POST" action="/edit-part-form">
+      <label for="">Quantity: </label>
+      <input type="number" name="input-stockTotal" id="input-stockTotal">
+      
+      <select name="input-partID" id="input-partID">
+        <option selected disabled></option>
+        {{#each data}}
+          <option value="{{this.ID}}">{{this.Name}}</option>
+        {{/each}}
+      </select>
+
       <button onclick="hideForm('edit-part')">Save</button>
-      <button onclick="hideForm('edit-part')">Cancel</button>
           
     </form>
   </table>
@@ -103,17 +109,16 @@
           <td>
             <select name="input-categoryID" id="input-categoryID">
               <option selected disabled></option>
-              <!-- ATTENTION: this should be a separate query; it currently lists the categories from each part, duplicating some parts -->
-              {{#each data}}
-                <option value="{{this.Categories.categoryID}}">{{this.Category}}</option>
+              {{#each categories}}
+                <option value="{{this.categoryID}}">{{this.categoryName}}</option>
               {{/each}}
             </select>
           </td>
           <td>
             <select name="input-warehouseID" id="input-warehouseID" required>
               <option selected disabled></option>
-              {{#each data}}
-                <option value="{{this.Warehouses.warehouseID}}">{{this.Warehouse}}</option>
+              {{#each warehouses}}
+                <option value="{{this.ID}}">{{this.City}}</option>
               {{/each}}
             </select>
           </td>
