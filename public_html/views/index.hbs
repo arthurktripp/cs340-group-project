@@ -61,16 +61,16 @@
   <!-- table structure created with tablesgenerator.com-->
     <form id="edit-part-form" method="POST" action="/edit-part-form">
       <label for="">Quantity: </label>
-      <input type="number" name="input-stockTotal" id="input-stockTotal">
+      <input type="number" name="input-stockTotal" id="input-stockTotal" required>
       
-      <select name="select-partID" id="select-partID">
+      <select name="select-partID" id="select-partID" required>
         <option selected disabled></option>
         {{#each data}}
           <option value="{{this.ID}}">{{this.Name}}</option>
         {{/each}}
       </select>
 
-      <select name="select-city" id="select-city">
+      <select name="select-city" id="select-city" required>
         <option selected disabled></option>
         {{#each warehouses}}
           <option value="{{this.ID}}">{{this.City}}</option>
@@ -78,7 +78,7 @@
         <option value="NULL">NO LOCATION</option>
       </select>
 
-      <button onclick="hideForm('edit-part')">Save</button>
+      <button onclick="hideFormCheck('edit-part')">Save</button>
           
     </form>
   </table>

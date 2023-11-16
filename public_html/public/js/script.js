@@ -2,8 +2,16 @@ function displayForm(id) {
   document.getElementById(id).style.display = "block";
 }
 
+function hideFormCheck(id) {
+  if (document.getElementById(id).checkValidity()) {
+    document.getElementById(id).style.display = "none";
+  }
+}
+
 function hideForm(id) {
-  document.getElementById(id).style.display = "none";
+  if (document.getElementById(id).checkValidity()) {
+    document.getElementById(id).style.display = "none";
+  }
 }
 
 function confirmDelete(hide1, hide2) {
