@@ -45,7 +45,7 @@ app.get('/', function(req, res){
                   Warehouses.warehouseID as ""
                 FROM Parts
                 JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
-                JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;`;
+                LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;`;
 
   let query2 = `SELECT * FROM PartCategories`;
   let query3 = `SELECT 
@@ -99,7 +99,7 @@ app.post('/edit-part-form', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    let query1 = `UPDATE Parts SET stockTotal = ${data['input-stockTotal']} WHERE partID = ${data['select-partID']}`;
+    let query1 = `UPDATE Parts SET stockTotal = ${data['input-stockTotal']}, warehouseID = ${data['select-city']} WHERE partID = ${data['select-partID']}`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error

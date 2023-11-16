@@ -70,6 +70,14 @@
         {{/each}}
       </select>
 
+      <select name="select-city" id="select-city">
+        <option selected disabled></option>
+        {{#each warehouses}}
+          <option value="{{this.ID}}">{{this.City}}</option>
+        {{/each}}
+        <option value="NULL">NO LOCATION</option>
+      </select>
+
       <button onclick="hideForm('edit-part')">Save</button>
           
     </form>
