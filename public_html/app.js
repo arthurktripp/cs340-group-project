@@ -99,7 +99,7 @@ app.post('/edit-part-form', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    let query1 = `UPDATE Parts SET stockTotal = ${data['input-stockTotal']} WHERE partID = ${data['input-partID']}`;
+    let query1 = `UPDATE Parts SET stockTotal = ${data['input-stockTotal']} WHERE partID = ${data['select-partID']}`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error
