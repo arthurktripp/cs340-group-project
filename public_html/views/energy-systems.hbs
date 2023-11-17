@@ -1,0 +1,187 @@
+<!-- energy-systems.hbs -->
+
+<main>
+  <h2>Energy Systems</h2>
+    <div class="page-description">
+      Manage the Energy Systems that we can assemble and sell.<br>
+      The number available is based on current inventories of necessary parts.<br>
+      From a system's details view, click edit to change elements like the description or parts necessary parts, or delete the system entirely. 
+    </div> 
+
+<div class="create-new-system">
+      <button onclick="displayForm('energy-systems-create')">Create New System</button>
+    </div>
+
+    <div id="energy-systems-list">
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            {{#each data.[0]}}
+            <th>{{@key}}</th>
+            {{/each}}
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each data}}
+          <tr>
+            <td>{{this.ID}}</td>
+            <td>{{this.Name}}</td>
+            <td>{{this.Description}}</td>
+            <td>{{this.Time}}</td>
+            <td>{{this.Income}}</td>
+
+            <td><button onclick="displayForm('energy-systems-details')">Details</button></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+
+    <div id="energy-systems-details"  class="hide-on-pageload">
+      <h2>
+        System Details
+      </h2>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Install Time</th>
+            <th>Customer Income</th>
+            <th>Number Available</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Small Solar</td>
+            <td>This is a small solar system</td>
+            <td>60</td>
+            <td>100</td>
+            <td>50</td>
+            <td>
+              <button onclick="displayForm('energy-systems-edit'); hideForm('energy-systems-details')">Edit</button>
+            </td>
+
+          </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <div id="energy-systems-edit" class="hide-on-pageload">
+      <h2>
+        Edit System Details
+      </h2>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Install Time</th>
+            <th>Customer Income</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <form>
+            <tr>
+              <td>1</td>
+              <td>
+                <input type="text" id="system-name" value="Small Solar" />
+              </td>
+              <td>
+                <textarea id="sys_description" rows="4">This is a small solar system</textarea>
+              </td>
+              <td>
+                <input type="number" id="install_time" value="60" />
+              </td>
+              <td>
+                <input type="number" id="customer_income" value="100" />
+              </td>
+              <td>
+                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Save</button>
+              </td>
+              <td>
+                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Cancel</button>
+              </td>
+              <td>
+                <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="5" >
+                <div class="parts-checks">
+                  <div><input type="checkbox" checked><label>Small Battery</label></div>
+                  <div><input type="checkbox" checked><label>Small Solar Panel</label></div>
+                  <div><input type="checkbox" checked><label>Standard Cable</label></div>
+                </div>  
+              </td>
+            </tr>
+          </form>
+        </tbody>
+        </table>
+    </div>
+
+    <div id="energy-systems-create" class="hide-on-pageload">
+      <h2>
+        Create a New Energy System
+      </h2>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Install Time</th>
+            <th>Customer Income</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <form>
+            <tr>
+              <td>
+                <input type="text" id="system-name" required />
+              </td>
+              <td>
+                <textarea id="sys_description" rows="4"></textarea>
+              </td>
+              <td>
+                <input type="number" id="install_time" />
+              </td>
+              <td>
+                <input type="number" id="customer_income" />
+              </td>
+              <td>
+                <button onclick="hideForm('energy-systems-create')">Save</button>
+                <button onclick="hideForm('energy-systems-create')">Cancel</button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="5" >
+                <div class="parts-checks">
+                  <div><input type="checkbox"><label>Small Battery</label></div>
+                  <div><input type="checkbox"><label>Small Solar Panel</label></div>
+                  <div><input type="checkbox"><label>Standard Cable</label></div>
+                </div>  
+              </td>
+            </tr>
+          </form>
+        </tbody>
+        </table>
+    </div>
+
+
+
+
+</main>

@@ -1,8 +1,4 @@
-<header>
-  {{> nav}}
-</header>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- index.hbs -->
 
 <main>
   <h2>Parts Inventory</h2>
@@ -11,12 +7,12 @@
     </div> 
 
   <div id="page-options">
-      <form class="db-filter" action="filter_by_category" onchange="this.form.submit();">
+      <form class="db-filter" action="/filter_by_category" onchange="this.form.submit();">
         <label>Filter by Category: </label>
         <select id="category">
           <option value="%">All</option>
-          {{#each data}}
-            <option value="{{this.categoryID}}">{{this.Category}}</option>
+          {{#each categories}}
+            <option value="{{this.categoryID}}">{{this.categoryName}}</option>
           {{/each}}
         </select>
       </form>
@@ -48,30 +44,31 @@
         <td>{{this.Cost}}</td>
         <td>{{this.Category}}</td>
         <td>{{this.Warehouse}}</td>
-        <td><button onclick="displayForm('edit-part')">Update Stock</button></td>
+        <td><button onclick="displayForm('edit-part')">Update</button></td>
         <td><button onclick="deletePart({{this.ID}})">Delete</button></td>
       </tr>
     {{/each}}
   </tbody>
 </table>
-<script src="./js/delete-part.js"></script>
+
 
 <div id="edit-part" class="hide-on-pageload">
-  <h2>Edit Part Details</h2>
+  <h2>Update Part</h2>
+  <p>Update a part's quantity or location.</p>
   <!-- table structure created with tablesgenerator.com-->
     <form id="edit-part-form" method="POST" action="/edit-part-form">
-      <label for="">Quantity: </label>
+      <label for="input-stockTotal">Quantity: </label>
       <input type="number" name="input-stockTotal" id="input-stockTotal" required>
       
       <select name="select-partID" id="select-partID" required>
-        <option selected disabled></option>
+        <option selected disabled>Part Name</option>
         {{#each data}}
           <option value="{{this.ID}}">{{this.Name}}</option>
         {{/each}}
       </select>
 
       <select name="select-city" id="select-city" required>
-        <option selected disabled></option>
+        <option selected disabled>Warehouse City</option>
         {{#each warehouses}}
           <option value="{{this.ID}}">{{this.City}}</option>
         {{/each}}
@@ -85,7 +82,10 @@
 </div>
 
 <div id="create-part" class="hide-on-pageload">
-  <h2>Create New Part</h2>
+  <h2 style="display: inline; margin-right: 2em;">Create New Part</h2>
+  <div class="inline-buttons">
+    <button onclick="hideForm('create-part')" >Cancel</button>  
+  </div>
   <!-- table structure created with tablesgenerator.com-->
   <table>
     <form id="add-part-form" method="POST" action="/add-part-form">
@@ -112,7 +112,7 @@
             <input type="number" name="input-stockTotal" id="input-stockTotal">
           </td>
           <td>
-            <input type="number" name="input-partCost" id="input-partCost">
+            <input type="number" step=".01" name="input-partCost" id="input-partCost">
           </td>
           <td>
             <select name="input-categoryID" id="input-categoryID">
@@ -132,14 +132,11 @@
           </td>
           <td>
             <input type="submit" value="Save">
-            <button onclick="hideForm('create-part')">Cancel</button>
           </td>
         </tr>
       </tbody>
     </form>
   </table>
 </div>
-
-
 
 </main>
