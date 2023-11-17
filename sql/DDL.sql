@@ -2,9 +2,9 @@
 -- Arthur Tripp
 -- Group 68 - Team Renewable Energy
 
-----------------------------------
+-- --------------------------------
 -- **** Database Structure **** --
-----------------------------------
+-- --------------------------------
 
 -- disable foreign key checks and auto-commit
 SET AUTOCOMMIT = 0;
@@ -70,9 +70,9 @@ CREATE TABLE SystemParts (
     FOREIGN KEY (partID) REFERENCES Parts(partID) ON DELETE CASCADE
 );
 
---------------------------------
+-- ------------------------------
 -- **** Database Inserts **** --
---------------------------------
+-- ------------------------------
 
 -- insert data into the EnergySystems table
 INSERT INTO EnergySystems (systemName, systemDescription, estimatedInstallTime, estimatedCustomerIncome)
@@ -97,7 +97,9 @@ INSERT INTO Warehouses (phoneNumber, addressLine1, addressLine2, cityLocation, s
 INSERT INTO Parts (partName, partDescription, stockTotal, partCost, categoryID, warehouseID)
     VALUES ("Small battery", NULL, 100, 50.49, 1, 1),
     ("Standard cable", "Used in many systems to connect various parts.", 300, 20.99, 2, 2),
-    ("Small solar panel", NULL, 50, 15.97, 3, 2)
+    ("Small solar panel", NULL, 50, 15.97, 3, 2),
+    ("High voltage cable", "Rated for 240v", 30, 25.99, 2, 2),
+    ("Large Solar Panel", "200 watt solar panel, 3'x4'", 35, 70, 3, 1)
 ;
 
 -- insert data into the SystemParts intersection table

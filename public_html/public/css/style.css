@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bebas+Neue&display=swap');
 
-
-
 /**** Sections Styles ****/
 html, body {
 	min-height: 100%;
@@ -111,6 +109,7 @@ div.hide-on-pageload {
 
 form.db-filter {
   display: inline;
+  margin-right: 2em;
 }
 
 table.has-id td:first-child {

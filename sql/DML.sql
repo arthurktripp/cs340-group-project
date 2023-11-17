@@ -2,9 +2,9 @@
 -- Arthur Tripp and Liam Robbins
 
 
-------------------------------------
+-- ----------------------------------
 -- **** EnergySystems entity **** 
-------------------------------------
+-- ----------------------------------
 
 -- select stockParts for all parts associated with a system, then return the minimum.
 -- Used to display maximum number of possible systems to be built
@@ -45,9 +45,9 @@ INSERT INTO PartCategories(categoryName) VALUES
 -- delete not needed
 
 
-------------------------------------
+-- ----------------------------------
 -- **** Warehouses entity **** 
-------------------------------------
+-- ----------------------------------
 
 -- select
 SELECT * FROM Warehouses
@@ -74,22 +74,24 @@ WHERE partName = :partNameInput;
 -- delete not needed
 
 
-------------------------------------
+-- ----------------------------------
 -- ****    Parts entity ****    
-------------------------------------
+-- ----------------------------------
 
 -- select
-SELECT 
-	partID, 
-	partName, 
-	partDescription, 
-	stockTotal, 
-	partCost, 
-	PartCategories.categoryName, 
-	Warehouses.cityLocation
+SELECT
+	partID as "ID",
+	partName as "Name",
+	partDescription as "Description",
+	stockTotal as "Stock",
+	partCost as "Cost",
+	PartCategories.categoryName as "Category",
+	Warehouses.cityLocation as "Warehouse",
+	PartCategories.categoryID as "",
+	Warehouses.warehouseID as ""
 FROM Parts
-	INNER JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID
-	INNER JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID;
+JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
+LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;
 
 -- select by categoryID
 SELECT
@@ -103,7 +105,7 @@ SELECT
 FROM Parts
 	INNER JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID
 	INNER JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
-WHERE Parts.categoryID = :categoryIDInput;	--Could use name instead
+WHERE Parts.categoryID = :categoryIDInput;
 
 -- insert
 INSERT INTO Parts
@@ -122,14 +124,22 @@ WHERE partID = :partIDInput;
 
 -- delete
 DELETE FROM Parts 
-WHERE partID = :partIDInput; --Could use name instead
+WHERE partID = :partIDInput;
 
+-- categories drowpdown selection
+SELECT * FROM PartCategories;
 
-------------------------------------
+-- warehouse dropdown selection
+SELECT 
+	warehouseID as "ID",
+	cityLocation as "City"
+FROM Warehouses;
+
+-- ----------------------------------
 -- **** SystemParts entity **** 
 -- (intersection table between 
 -- EnergySystems and Parts)
-------------------------------------
+-- ----------------------------------
 -- select
 SELECT 
 	EnergySystems.systemID, 

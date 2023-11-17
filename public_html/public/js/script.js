@@ -9,10 +9,10 @@ function hideFormCheck(id) {
 }
 
 function hideForm(id) {
-  if (document.getElementById(id).checkValidity()) {
+  // if (document.getElementById(id).checkValidity()) {
     document.getElementById(id).style.display = "none";
-  }
-}
+  // }
+};
 
 function confirmDelete(hide1, hide2) {
   confirmation = confirm('Are you sure you want to delete this record? This action cannot be undone.');

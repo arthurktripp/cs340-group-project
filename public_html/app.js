@@ -26,13 +26,16 @@ app.use(express.static('public'));              // defines the folder for linkin
 var db = require('./database/db-connector');
 
 
-/*
-  ROUTES
-*/
+/* *************************
+ -------- ROUTES -------- //
+***************************/ 
 
+/* *************************
+ ----- RENDER PAGES ----- //
+***************************/ 
 
+// ----- PARTS PAGE ----- //
 app.get('/', function(req, res){
-  // warehouseID and categoryID should go in a separate query
   let query1 = `SELECT
                   partID as "ID",
                   partName as "Name",
@@ -47,11 +50,11 @@ app.get('/', function(req, res){
                 JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
                 LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;`;
 
-  let query2 = `SELECT * FROM PartCategories`;
+  let query2 = `SELECT * FROM PartCategories;`;
   let query3 = `SELECT 
                   warehouseID as "ID",
                   cityLocation as "City"
-                FROM Warehouses`;
+                FROM Warehouses;`;
   db.pool.query(query1, function(error, rows, fields){ 
     let data = rows;
     db.pool.query(query2, function(error, rows, fields){ 
@@ -59,11 +62,52 @@ app.get('/', function(req, res){
         db.pool.query(query3, function(error, rows, fields){ 
           let warehouses = rows;
           // console.log(categories);
-            res.render('index', {data: data, categories: categories, warehouses: warehouses});
+            res.render('index', {data: data,
+                                categories: categories,
+                                warehouses: warehouses,
+                                title: 'Parts'});
         })
     })
   })
 });
+
+// ----- ENERGY SYSTEMS PAGE ----- //
+app.get('/energy-systems', function(req, res) {
+  let query1 = `SELECT
+                  systemID as ID,
+                  systemName as Name,
+                  systemDescription as Description,
+                  estimatedInstallTime as Time,
+                  estimatedCustomerIncome Income
+                FROM EnergySystems;`;
+  
+  db.pool.query(query1, function(error, rows, fields){
+    res.render('energy-systems', {data: rows,
+                                  title: 'Energy Systems'});
+  })
+});
+
+// ----- CATEGORIES PAGE ----- //
+app.get('/part-categories', function(req, res) {
+  let query1 = "SELECT * FROM PartCategories;";
+  
+  db.pool.query(query1, function(error, rows, fields){
+    res.render('categories', {data: rows,
+                              title: 'Parts Categories'});
+  })
+});
+
+
+// ----- WAREHOUSES PAGE ----- //
+app.get('/warehouses', function(req, res) {
+  let query1 = "SELECT * FROM Warehouses;";
+  
+  db.pool.query(query1, function(error, rows, fields){
+    res.render('warehouses', {data: rows,
+                              title: 'Warehouses'});
+  })
+});
+
 
 
 app.post('/add-part-form', function(req, res) 
@@ -135,15 +179,10 @@ app.delete('/delete-part-ajax/', function(req,res,next){
             }
 })});
 
-// ----- NEEDS WORK ----- //
-/* app.get('/part-categories', function(req, res) {
-  let query2 = "SELECT * FROM PartCategories;";
-  
-  db.pool.query(query2, function(error, rows, fields){
-    res.render('index', {data: rows});
-  })
-});
-    */
+
+
+
+
 
 /*
   LISTENER
