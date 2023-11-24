@@ -1,0 +1,78 @@
+<!-- warehouses.hbs -->
+
+<main>
+  <h2>System Parts</h2>
+    <div class="page-description">
+      Information about our energy systems and their parts. 
+    </div> 
+
+        <div class="new-intersection inline-buttons">
+          <button onclick="displayForm('create-intersection')">Add New Intersection</button>
+        </div>
+
+
+    <table id="intersection-table">
+      <thead>
+        <tr>
+          {{#each data.[0]}}
+          <th>
+            {{@key}}
+          </th>
+          {{/each}}
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          <tr data-value={{this.ID}}>
+            <td>{{this.ID}}</td>
+            <td>{{this.System}}</td>
+            <td>{{this.Part}}</td>
+            <td><button onclick="deleteIntersection({{this.ID}})">Delete</button></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div id="create-intersection" class="hide-on-pageload">
+      <h2 style="display: inline; margin-right: 2em;">Create New Part</h2>
+      <div class="inline-buttons">
+        <button onclick="hideForm('create-intersection')" >Cancel</button>  
+      </div>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <form id="add-intersection-form" method="POST" action="/add-intersection-form">
+          <thead>
+            <tr>
+              <th>System</th>
+              <th>Part</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <select name="input-systemID" id="input-systemID">
+                  <option selected disabled></option>
+                  {{#each systems}}
+                    <option value="{{this.systemID}}">{{this.systemName}}</option>
+                  {{/each}}
+                </select>
+              </td>
+              <td>
+                <select name="input-partID" id="input-partID" required>
+                  <option selected disabled></option>
+                  {{#each parts}}
+                    <option value="{{this.partID}}">{{this.partName}}</option>
+                  {{/each}}
+                </select>
+              </td>
+              <td>
+                <input type="submit" value="Save">
+              </td>
+            </tr>
+          </tbody>
+        </form>
+      </table>
+    </div>
+
+</main>

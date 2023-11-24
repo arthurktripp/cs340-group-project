@@ -55,11 +55,11 @@ app.get('/', function(req, res){
                   warehouseID as "ID",
                   cityLocation as "City"
                 FROM Warehouses;`;
-  db.pool.query(query1, function(error, rows, fields){ 
+  db.pool.query(query1, function(error, rows, fields) { 
     let data = rows;
-    db.pool.query(query2, function(error, rows, fields){ 
+    db.pool.query(query2, function(error, rows, fields) { 
       let categories = rows;
-        db.pool.query(query3, function(error, rows, fields){ 
+        db.pool.query(query3, function(error, rows, fields) { 
           let warehouses = rows;
           // console.log(categories);
             res.render('index', {data: data,
@@ -238,7 +238,59 @@ app.post('/add-warehouse-form', function(req, res)
     })
 });
 
+// ----- INTERSECTIONS PAGE ----- //
+app.get('/intersection', function(req, res) {
+  let query1 = `SELECT
+                  systemPartsID as "ID",
+                  EnergySystems.systemName as "System",
+                  Parts.partName as "Part"
+                FROM SystemParts
+                JOIN EnergySystems ON EnergySystems.systemID = SystemParts.systemID
+                JOIN Parts ON Parts.partID = SystemParts.partID;`;
 
+  let query2 = `SELECT * FROM EnergySystems;`;
+  let query3 = `SELECT * FROM Parts;`;
+  
+  db.pool.query(query1, function(error, rows, fields) { 
+    let data = rows;
+    db.pool.query(query2, function(error, rows, fields) { 
+      let systems = rows;
+        db.pool.query(query3, function(error, rows, fields) { 
+          let parts = rows;
+          // console.log(parts);
+            res.render('intersection', {data: data,
+                                systems: systems,
+                                parts: parts,
+                                title: 'Intersection'});
+        })
+    })
+  })
+});
+
+app.post('/add-intersection-form', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    //What if I perform a select query, and if it fails, then we call insert? Otherwise we alert the user
+
+    query1 = `SELECT * FROM SystemParts WHERE systemID = ${data['input-systemID']} AND partID = ${data['input-partID']}`;
+
+    query2 = `INSERT INTO SystemParts (systemID, partID) VALUES (
+        ${data['input-systemID']}, 
+        ${data['input-partID']})`;
+
+    db.pool.query(query1, function(error, rows, fields) {
+      // console.log(rows)
+        // Check to see if there was an error
+        if (rows == '') { //if select query is empty
+            db.pool.query(query2, function(error, rows, fields) {
+                res.redirect('/intersection');
+            })
+        }
+    })
+    res.redirect('/intersection');    //I would like to use alert() here but I can't. Any way to tell the user that they can't insert an existing intersection?
+});
 
 
 /*
