@@ -3,13 +3,61 @@
 <main>
   <h2>Parts Categories</h2>
     <div class="page-description">
-      Add or edit categories to keep the parts inventory organized. 
+      Add or view categories to keep the parts inventory organized. 
     </div> 
 
+    <div class="new-part inline-buttons">
+      <button onclick="displayForm('create-category')">Add New Category</button>
+    </div>
 
 
+<table id="categories-table">
+  <thead>
+    <tr>
+      {{#each data.[0]}}
+      <th>
+        {{@key}}
+      </th>
+      {{/each}}
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr data-value={{this.ID}}>
+        <td>{{this.ID}}</td>
+        <td>{{this.Name}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
 
-
+<div id="create-category" class="hide-on-pageload">
+  <h2 style="display: inline; margin-right: 2em;">Create New Category</h2>
+  <div class="inline-buttons">
+    <button onclick="hideForm('create-category')">Cancel</button>  
+  </div>
+  <!-- table structure created with tablesgenerator.com-->
+  <table>
+    <form id="add-category-form" method="POST" action="/add-category-form">
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" name="input-categoryName" id="input-categoryName">
+          </td>
+          <td>
+            <input type="submit" value="Save">
+          </td>
+        </tr>
+      </tbody>
+    </form>
+  </table>
+</div>
 
 
 </main>

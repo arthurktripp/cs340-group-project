@@ -9,7 +9,7 @@
 // EXPRESS
 var express = require('express'); 
 var app = express();
-PORT = 9794;
+PORT = 12323;
 
 // HANDLEBARS
 const { engine } = require('express-handlebars');
@@ -70,45 +70,6 @@ app.get('/', function(req, res){
     })
   })
 });
-
-// ----- ENERGY SYSTEMS PAGE ----- //
-app.get('/energy-systems', function(req, res) {
-  let query1 = `SELECT
-                  systemID as ID,
-                  systemName as Name,
-                  systemDescription as Description,
-                  estimatedInstallTime as Time,
-                  estimatedCustomerIncome Income
-                FROM EnergySystems;`;
-  
-  db.pool.query(query1, function(error, rows, fields){
-    res.render('energy-systems', {data: rows,
-                                  title: 'Energy Systems'});
-  })
-});
-
-// ----- CATEGORIES PAGE ----- //
-app.get('/part-categories', function(req, res) {
-  let query1 = "SELECT * FROM PartCategories;";
-  
-  db.pool.query(query1, function(error, rows, fields){
-    res.render('categories', {data: rows,
-                              title: 'Parts Categories'});
-  })
-});
-
-
-// ----- WAREHOUSES PAGE ----- //
-app.get('/warehouses', function(req, res) {
-  let query1 = "SELECT * FROM Warehouses;";
-  
-  db.pool.query(query1, function(error, rows, fields){
-    res.render('warehouses', {data: rows,
-                              title: 'Warehouses'});
-  })
-});
-
-
 
 app.post('/add-part-form', function(req, res) 
 {
@@ -179,7 +140,103 @@ app.delete('/delete-part-ajax/', function(req,res,next){
             }
 })});
 
+// ----- ENERGY SYSTEMS PAGE ----- //
+app.get('/energy-systems', function(req, res) {
+  let query1 = `SELECT
+                  systemID as ID,
+                  systemName as Name,
+                  systemDescription as Description,
+                  estimatedInstallTime as Time,
+                  estimatedCustomerIncome Income
+                FROM EnergySystems;`;
+  
+  db.pool.query(query1, function(error, rows, fields){
+    res.render('energy-systems', {data: rows,
+                                  title: 'Energy Systems'});
+  })
+});
 
+// ----- CATEGORIES PAGE ----- //
+app.get('/part-categories', function(req, res) {
+  let query1 = `SELECT 
+                  categoryID as ID,
+                  categoryName as Name
+                  FROM PartCategories;`;
+  
+  db.pool.query(query1, function(error, rows, fields){
+    res.render('categories', {data: rows,
+                              title: 'Parts Categories'});
+  })
+});
+
+app.post('/add-category-form', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    query1 = `INSERT INTO PartCategories (categoryName) VALUES (
+        '${data['input-categoryName']}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.redirect('/part-categories');
+        }
+    })
+});
+
+// ----- WAREHOUSES PAGE ----- //
+app.get('/warehouses', function(req, res) {
+  let query1 = `SELECT 
+                  warehouseID as ID,
+                  phoneNumber as Phone,
+                  addressLine1 as Address,
+                  addressLine2 as Address2,
+                  cityLocation as City,
+                  stateLocation as State,
+                  zipCode as Zip
+                  FROM Warehouses;`;
+  
+  db.pool.query(query1, function(error, rows, fields){
+    res.render('warehouses', {data: rows,
+                              title: 'Warehouses'});
+  })
+});
+
+app.post('/add-warehouse-form', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    query1 = `INSERT INTO Warehouses (phoneNumber, addressLine1, addressLine2, cityLocation, stateLocation, zipCode) VALUES (
+        '${data['input-warehousePhone']}', 
+        '${data['input-warehouseAddress']}', 
+        '${data['input-warehouseAddress2']}', 
+        '${data['input-warehouseCity']}', 
+        '${data['input-warehouseState']}', 
+        '${data['input-warehouseZip']}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.redirect('/warehouses');
+        }
+    })
+});
 
 
 

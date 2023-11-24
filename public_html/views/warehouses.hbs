@@ -6,5 +6,82 @@
       Information about our warehouses. 
     </div> 
 
+        <div class="new-part inline-buttons">
+          <button onclick="displayForm('create-warehouse')">Add New Warehouse</button>
+        </div>
+
+
+    <table id="warehouses-table">
+      <thead>
+        <tr>
+          {{#each data.[0]}}
+          <th>
+            {{@key}}
+          </th>
+          {{/each}}
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          <tr data-value={{this.ID}}>
+            <td>{{this.ID}}</td>
+            <td>{{this.Phone}}</td>
+            <td>{{this.Address}}</td>
+            <td>{{this.Address2}}</td>
+            <td>{{this.City}}</td>
+            <td>{{this.State}}</td>
+            <td>{{this.Zip}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div id="create-warehouse" class="hide-on-pageload">
+      <h2 style="display: inline; margin-right: 2em;">Create New warehouse</h2>
+      <div class="inline-buttons">
+        <button onclick="hideForm('create-warehouse')">Cancel</button>  
+      </div>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <form id="add-warehouse-form" method="POST" action="/add-warehouse-form">
+          <thead>
+            <tr>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Address2</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Zip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" name="input-warehousePhone" id="input-warehousePhone">
+              </td>
+              <td>
+                <input type="text" name="input-warehouseAddress" id="input-warehouseAddress">
+              </td>
+              <td>
+                <input type="text" name="input-warehouseAddress2" id="input-warehouseAddress2">
+              </td>
+              <td>
+                <input type="text" name="input-warehouseCity" id="input-warehouseCity">
+              </td>
+              <td>
+                <input type="text" name="input-warehouseState" id="input-warehouseState">
+              </td>
+              <td>
+                <input type="text" name="input-warehouseZip" id="input-warehouseZip">
+              </td>
+              <td>
+                <input type="submit" value="Save">
+              </td>
+            </tr>
+          </tbody>
+        </form>
+      </table>
+    </div>
 
 </main>
