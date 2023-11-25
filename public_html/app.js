@@ -292,6 +292,24 @@ app.post('/add-intersection-form', function(req, res)
     res.redirect('/intersection');    //I would like to use alert() here but I can't. Any way to tell the user that they can't insert an existing intersection?
 });
 
+app.delete('/delete-intersection-ajax/', function(req,res,next){
+  let data = req.body;
+  let systemPartsID = parseInt(data.systemPartsID);
+  let query1 = `DELETE FROM SystemParts WHERE systemPartsID = ?`;
+
+        // Run the 1st query
+        db.pool.query(query1, [systemPartsID], function(error, rows, fields){
+            if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+            else
+            {
+                res.sendStatus(204);
+            }
+})});
 
 /*
   LISTENER
