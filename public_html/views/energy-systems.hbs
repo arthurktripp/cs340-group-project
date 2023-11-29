@@ -1,6 +1,10 @@
 <!-- energy-systems.hbs -->
 
 <main>
+<script>
+
+</script>
+
   <h2>Energy Systems</h2>
     <div class="page-description">
       Manage the Energy Systems that we can assemble and sell.<br>
@@ -8,125 +12,134 @@
       From a system's details view, click edit to change elements like the description or parts necessary parts, or delete the system entirely. 
     </div> 
 
-<div class="create-new-system">
+<div id="create-new-system">
       <button onclick="displayForm('energy-systems-create')">Create New System</button>
     </div>
 
-    <div id="energy-systems-table">
-      <!-- table structure created with tablesgenerator.com-->
-      <table>
-        <thead>
-          <tr>
-            {{#each data.[0]}}
-            <th>{{@key}}</th>
+    <div id="energy-systems-list">
+      <form method="GET">
+        <!-- table structure created with tablesgenerator.com-->
+        <table>
+          <thead>
+            <tr>
+              {{#each data.[0]}}
+              <th>{{@key}}</th>
+              {{/each}}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each data}}
+            <tr>
+              <td>{{this.ID}}</td>
+              <td>{{this.Name}}</td>
+              <td>{{this.Description}}</td>
+              <td>{{this.Time}}</td>
+              <td>{{this.Income}}</td>
+              <td><button name="systemID" value="{{this.ID}}">Edit</button></td>
+            </tr>
             {{/each}}
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each data}}
-          <tr>
-            <td>{{this.ID}}</td>
-            <td>{{this.Name}}</td>
-            <td>{{this.Description}}</td>
-            <td>{{this.Time}}</td>
-            <td>{{this.Income}}</td>
-
-            <td><button onclick="displayForm('energy-systems-details')">Details</button></td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </form>
     </div>
 
-
+<!-- 
     <div id="energy-systems-details"  class="hide-on-pageload">
       <h2>
         System Details
       </h2>
-      <!-- table structure created with tablesgenerator.com-->
+      {{! table structure created with tablesgenerator.com }}
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Install Time</th>
-            <th>Customer Income</th>
-            <th>Number Available</th>
+            {{#each details.[0]}}
+              <th>{{@key}}</th>
+            {{/each}}
+            <th></th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>Small Solar</td>
-            <td>This is a small solar system</td>
-            <td>60</td>
-            <td>100</td>
-            <td>50</td>
+          {{#each details}}
+            <td>{{this.ID}}</td>
+            <td>{{this.Name}}</td>
+            <td>{{this.Description}}</td>
+            <td>{{this.InstallTime}}</td>
+            <td>{{this.Income}}</td>
+          {{/each}}
             <td>
-              <button onclick="displayForm('energy-systems-edit'); hideForm('energy-systems-details')">Edit</button>
+              <button>Edit</button>
+              <button onclick="displayForm('energy-systems-edit'); hideForm('energy-systems-details')">Back</button>
             </td>
 
           </tr>
         </tbody>
         </table>
     </div>
+    -->
 
-    <div id="energy-systems-edit" class="hide-on-pageload">
-      <h2>
-        Edit System Details
-      </h2>
+    <div id="energy-systems-edit" {{!class="hide-on-pageload"}}>
       <!-- table structure created with tablesgenerator.com-->
       <table>
+      <form>
+      
+        <h2>
+          Edit System Details
+        </h2>
+      
+            <div class="form-buttons">
+                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Save</button>
+                <button action="/">Cancel</button>
+                <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
+            </div>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Install Time</th>
-            <th>Customer Income</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            {{#each data.[0]}}
+              <th>{{@key}}</th>
+            {{/each}}
+            
           </tr>
         </thead>
         <tbody>
-          <form>
+          
+
+            {{#each data}}
             <tr>
-              <td>1</td>
+              <td>{{this.ID}}</td>
               <td>
-                <input type="text" id="system-name" value="Small Solar" />
+                <input type="text" id="system-name" value="{{this.Name}}" />
               </td>
               <td>
-                <textarea id="sys_description" rows="4">This is a small solar system</textarea>
+                <textarea id="sys_description" rows="4">{{this.Description}}</textarea>
               </td>
               <td>
-                <input type="number" id="install_time" value="60" />
+                <input type="number" id="install_time" value="{{this.Time}}" />
               </td>
               <td>
-                <input type="number" id="customer_income" value="100" />
+                <input type="number" id="customer_income" value="{{this.Income}}" />
               </td>
-              <td>
-                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Save</button>
-              </td>
-              <td>
-                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Cancel</button>
-              </td>
-              <td>
-                <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
-              </td>
+
+              
             </tr>
+            {{/each}}
             <tr>
               <td colspan="5" >
                 <div class="parts-checks">
-                  <div><input type="checkbox" checked><label>Small Battery</label></div>
-                  <div><input type="checkbox" checked><label>Small Solar Panel</label></div>
-                  <div><input type="checkbox" checked><label>Standard Cable</label></div>
+                  {{#each parts}}
+                  <div><input 
+                    type="checkbox" 
+                    value="{{this.partID}}"
+                          {{#checked this.sysPartsID}}{{/checked}}>
+                      <label>{{this.partName}}</label>
+                  </div>
+                  {{/each}}
                 </div>  
               </td>
             </tr>
+
+
           </form>
         </tbody>
         </table>
@@ -181,7 +194,24 @@
         </table>
     </div>
 
+<div>
 
 
+</div>
+
+
+<script>
+  if (pageQuery === '') {
+    hideForm('energy-systems-edit');
+  };
+  if (pageQuery !== '') {
+    hideForm('energy-systems-list');
+    hideForm('create-new-system')
+  };
+  
+  
+
+</script>
 
 </main>
+

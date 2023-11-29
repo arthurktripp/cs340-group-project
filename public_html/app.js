@@ -22,6 +22,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'));              // defines the folder for linking css & js
 
+
+
 //DATABASE
 var db = require('./database/db-connector');
 
@@ -142,18 +144,64 @@ app.delete('/delete-part-ajax/', function(req,res,next){
 
 // ----- ENERGY SYSTEMS PAGE ----- //
 app.get('/energy-systems', function(req, res) {
-  let query1 = `SELECT
-                  systemID as ID,
-                  systemName as Name,
-                  systemDescription as Description,
-                  estimatedInstallTime as Time,
-                  estimatedCustomerIncome Income
-                FROM EnergySystems;`;
+
+  
+  let query1; 
+  
+  if (req.query.systemID === undefined) {
+    query1 = `SELECT
+                systemID as ID, 
+                systemName as Name,
+                systemDescription as Description, 
+                estimatedInstallTime as Time, 
+                estimatedCustomerIncome as Income 
+              FROM EnergySystems;`;
+  } else  {
+     query1 = `SELECT 
+                systemID as ID, 
+                systemName as Name,
+                systemDescription as Description, 
+                estimatedInstallTime as Time, 
+                estimatedCustomerIncome as Income 
+              FROM EnergySystems 
+              WHERE systemID LIKE "${req.query.systemID}";`
+  }
+ let query2 = `SELECT
+                Parts.partName,
+                Parts.partID,
+                SystemParts.systemID as sysPartsID
+              FROM Parts
+              JOIN SystemParts ON SystemParts.partID = Parts.partID;`
+    
+  let query3 = `SELECT
+                  partID	 
+                FROM SystemParts
+                WHERE systemID = "${req.query.systemID}";`
+
   
   db.pool.query(query1, function(error, rows, fields){
-    res.render('energy-systems', {data: rows,
-                                  title: 'Energy Systems'});
-  })
+    let data = rows;
+   
+    db.pool.query(query2, function(error, rows, fields){
+      let parts = rows;
+
+      db.pool.query(query3, function(error, rows, fields){
+        let systemParts = rows;
+      
+          res.render('energy-systems', {data: data,
+                                      title: 'Energy Systems',
+                                      parts: parts,
+                                      systemParts: systemParts,
+                                      helpers: {
+                                        checked: function (sysPartsID){
+                                          if (sysPartsID == `${req.query.systemID}`){
+                                            return "checked"
+                                          }}
+                                      }
+                                    });
+      });
+    });  
+  });
 });
 
 // ----- CATEGORIES PAGE ----- //

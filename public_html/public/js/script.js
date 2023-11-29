@@ -1,3 +1,6 @@
+const pageQuery = window.location.search
+
+
 function displayForm(id) {
   document.getElementById(id).style.display = "block";
 }
@@ -23,6 +26,7 @@ function confirmDelete(hide1, hide2) {
   return;
 };
 
+
 /* Used for developement */
 function displayAllForms(divclass) {
   var forms = document.getElementsByClassName(divclass);
@@ -30,3 +34,7 @@ function displayAllForms(divclass) {
     forms[i].style.display = "block"; 
   }
 };
+
+
+
+                                      
