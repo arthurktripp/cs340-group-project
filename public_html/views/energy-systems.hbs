@@ -44,56 +44,20 @@
       </form>
     </div>
 
-<!-- 
-    <div id="energy-systems-details"  class="hide-on-pageload">
-      <h2>
-        System Details
-      </h2>
-      {{! table structure created with tablesgenerator.com }}
-      <table>
-        <thead>
-          <tr>
-            {{#each details.[0]}}
-              <th>{{@key}}</th>
-            {{/each}}
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-          {{#each details}}
-            <td>{{this.ID}}</td>
-            <td>{{this.Name}}</td>
-            <td>{{this.Description}}</td>
-            <td>{{this.InstallTime}}</td>
-            <td>{{this.Income}}</td>
-          {{/each}}
-            <td>
-              <button>Edit</button>
-              <button onclick="displayForm('energy-systems-edit'); hideForm('energy-systems-details')">Back</button>
-            </td>
-
-          </tr>
-        </tbody>
-        </table>
-    </div>
-    -->
-
     <div id="energy-systems-edit" {{!class="hide-on-pageload"}}>
       <!-- table structure created with tablesgenerator.com-->
       <table>
       <form>
-      
         <h2>
           Edit System Details
         </h2>
       
-            <div class="form-buttons">
-                <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Save</button>
-                <button action="/">Cancel</button>
-                <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
-            </div>
+          <div class="form-buttons">
+              <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Save</button>
+              <button action="/">Cancel</button>
+              <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
+          </div>
+
         <thead>
           <tr>
             {{#each data.[0]}}
@@ -128,10 +92,9 @@
               <td colspan="5" >
                 <div class="parts-checks">
                   {{#each parts}}
-                  <div><input 
-                    type="checkbox" 
-                    value="{{this.partID}}"
-                          {{#checked this.sysPartsID}}{{/checked}}>
+                  <div>
+                    <input type="checkbox" value="{{this.partID}}"
+                    {{#checked this.checked}}{{/checked}} >
                       <label>{{this.partName}}</label>
                   </div>
                   {{/each}}
@@ -164,16 +127,16 @@
           <form>
             <tr>
               <td>
-                <input type="text" id="system-name" required />
+                <input type="text" name="input-systemName" id="input-systemName" required />
               </td>
               <td>
-                <textarea id="sys_description" rows="4"></textarea>
+                <textarea rows="4" name="input-systemDescription" id="input-systemDescription"></textarea>
               </td>
               <td>
-                <input type="number" id="install_time" />
+                <input type="number" name="input-estimatedInstallTime" id="input-estimatedInstallTime" />
               </td>
               <td>
-                <input type="number" id="customer_income" />
+                <input type="number" name="input-estimatedCustomerIncome" id="input-estimatedCustomerIncome" />
               </td>
               <td>
                 <button onclick="hideForm('energy-systems-create')">Save</button>
@@ -183,15 +146,19 @@
             <tr>
               <td colspan="5" >
                 <div class="parts-checks">
-                  <div><input type="checkbox"><label>Small Battery</label></div>
-                  <div><input type="checkbox"><label>Small Solar Panel</label></div>
-                  <div><input type="checkbox"><label>Standard Cable</label></div>
-                </div>  
+                  {{#each parts}}
+                  <div><input 
+                    type="checkbox" 
+                    value="{{this.partID}}">
+                      <label>{{this.partName}}</label>
+                  </div>
+                  {{/each}}
+                </div>   
               </td>
             </tr>
           </form>
         </tbody>
-        </table>
+      </table>
     </div>
 
 <div>

@@ -207,12 +207,20 @@ app.get('/energy-systems', function(req, res) {
       WHERE systemID LIKE "${req.query.systemID}";`
   }
  let query2 = 
+  // LEFT JOIN includes all parts once, regardless of attachment to system
+  // CASE statement adds an identifier for inclusion in the specified system. 
   `SELECT
-    Parts.partName,
+	  Parts.partName,
     Parts.partID,
-    SystemParts.systemID as sysPartsID
-  FROM Parts
-  JOIN SystemParts ON SystemParts.partID = Parts.partID;`
+    CASE
+      WHEN SystemParts.systemID IS NULL THEN "false"
+      ELSE "true"
+    END AS checked
+    FROM Parts
+    LEFT JOIN SystemParts 
+      ON SystemParts.partID = Parts.partID
+      AND SystemParts.systemID = "${req.query.systemID}"
+    ORDER BY categoryID ASC, partName ASC;`
     
   let query3 = 
     `SELECT
@@ -237,8 +245,8 @@ app.get('/energy-systems', function(req, res) {
             systemParts: systemParts,
             helpers: {
               // checks off parts that are included in existing systems:
-              checked: function (sysPartsID){
-                if (sysPartsID == `${req.query.systemID}`){
+              checked: function (includes){
+                if (includes == 'true'){
                   return "checked"
                 }
               }
@@ -248,6 +256,8 @@ app.get('/energy-systems', function(req, res) {
     });  
   });
 });
+
+
 
 // ----- CATEGORIES PAGE ----- //
 app.get('/part-categories', function(req, res) {
