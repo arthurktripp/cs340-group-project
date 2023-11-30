@@ -405,8 +405,10 @@ app.post('/add-intersection-form', function(req, res)
                 res.redirect('/intersection');
             })
         }
+        else {
+    		res.redirect('/intersection');    //I would like to use alert() here but I can't. Any way to tell the user that they can't insert an existing intersection?
+        }
     })
-    res.redirect('/intersection');    //I would like to use alert() here but I can't. Any way to tell the user that they can't insert an existing intersection?
 });
 
 app.delete('/delete-intersection-ajax/', function(req,res,next){
