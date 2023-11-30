@@ -7,12 +7,12 @@
     </div> 
 
   <div id="page-options">
-      <form class="db-filter" action="/filter_by_category" onchange="this.form.submit();">
+      <form class="db-filter" method="GET" action="/"  >
         <label>Filter by Category: </label>
-        <select id="category">
-          <option value="%">All</option>
+        <select id="category" onchange="this.form.submit();" name="categoryID">
+          <option value="all">All</option>
           {{#each categories}}
-            <option value="{{this.categoryID}}">{{this.categoryName}}</option>
+            <option value="{{this.categoryID}}" {{#catSelected this.categoryID}}{{/catSelected}}>{{this.categoryName}}</option>
           {{/each}}
         </select>
       </form>

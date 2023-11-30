@@ -38,7 +38,9 @@ var db = require('./database/db-connector');
 
 // ----- PARTS PAGE ----- //
 app.get('/', function(req, res){
-  let query1 = `SELECT
+  let query1;
+  if (req.query.categoryID === undefined || req.query.categoryID == "all") {
+      query1 = `SELECT
                   partID as "ID",
                   partName as "Name",
                   partDescription as "Description",
@@ -51,6 +53,22 @@ app.get('/', function(req, res){
                 FROM Parts
                 JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
                 LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;`;
+  } else { 
+    query1 = `SELECT
+                  partID as "ID",
+                  partName as "Name",
+                  partDescription as "Description",
+                  stockTotal as "Stock",
+                  partCost as "Cost",
+                  PartCategories.categoryName as "Category",
+                  Warehouses.cityLocation as "Warehouse",
+                  PartCategories.categoryID as "",
+                  Warehouses.warehouseID as ""
+                FROM Parts
+                JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
+                LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID
+                WHERE PartCategories.categoryID LIKE ${req.query.categoryID};`;
+  } 
 
   let query2 = `SELECT * FROM PartCategories;`;
   let query3 = `SELECT 
@@ -67,7 +85,16 @@ app.get('/', function(req, res){
             res.render('index', {data: data,
                                 categories: categories,
                                 warehouses: warehouses,
-                                title: 'Parts'});
+                                title: 'Parts',
+                                helpers: {
+                                  // autoselects the correct category dropdown:
+                                  catSelected: function (catID){
+                                    if (catID == `${req.query.categoryID}`){
+                                      return "selected"
+                                    }
+                                  }
+                                }
+                              });
         })
     })
   })
@@ -144,8 +171,6 @@ app.delete('/delete-part-ajax/', function(req,res,next){
 
 // ----- ENERGY SYSTEMS PAGE ----- //
 app.get('/energy-systems', function(req, res) {
-
-  
   let query1; 
   
   if (req.query.systemID === undefined) {
@@ -193,10 +218,12 @@ app.get('/energy-systems', function(req, res) {
                                       parts: parts,
                                       systemParts: systemParts,
                                       helpers: {
+                                        // checks off parts that are included in existing systems:
                                         checked: function (sysPartsID){
                                           if (sysPartsID == `${req.query.systemID}`){
                                             return "checked"
-                                          }}
+                                          }
+                                        }
                                       }
                                     });
       });
