@@ -104,7 +104,10 @@ INSERT INTO Parts (partName, partDescription, stockTotal, partCost, categoryID, 
 
 -- insert data into the SystemParts intersection table
 INSERT INTO SystemParts (systemID, partID)
-    VALUES (1,1), (1,2), (1,3), (2,2)
+    VALUES
+        (1,1), (1,2), (1,3),
+        (2,2),
+        (3,5), (3,4)
 ;
 
 -- commit
