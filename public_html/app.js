@@ -40,41 +40,45 @@ var db = require('./database/db-connector');
 app.get('/', function(req, res){
   let query1;
   if (req.query.categoryID === undefined || req.query.categoryID == "all") {
-      query1 = `SELECT
-                  partID as "ID",
-                  partName as "Name",
-                  partDescription as "Description",
-                  stockTotal as "Stock",
-                  partCost as "Cost",
-                  PartCategories.categoryName as "Category",
-                  Warehouses.cityLocation as "Warehouse",
-                  PartCategories.categoryID as "",
-                  Warehouses.warehouseID as ""
-                FROM Parts
-                JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
-                LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;`;
+    query1 = 
+      `SELECT
+        partID as "ID",
+        partName as "Name",
+        partDescription as "Description",
+        stockTotal as "Stock",
+        partCost as "Cost",
+        PartCategories.categoryName as "Category",
+        Warehouses.cityLocation as "Warehouse",
+        PartCategories.categoryID as "",
+        Warehouses.warehouseID as ""
+      FROM Parts
+      JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
+      LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;`;
   } else { 
-    query1 = `SELECT
-                  partID as "ID",
-                  partName as "Name",
-                  partDescription as "Description",
-                  stockTotal as "Stock",
-                  partCost as "Cost",
-                  PartCategories.categoryName as "Category",
-                  Warehouses.cityLocation as "Warehouse",
-                  PartCategories.categoryID as "",
-                  Warehouses.warehouseID as ""
-                FROM Parts
-                JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
-                LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID
-                WHERE PartCategories.categoryID LIKE ${req.query.categoryID};`;
+    query1 =
+      `SELECT
+        partID as "ID",
+        partName as "Name",
+        partDescription as "Description",
+        stockTotal as "Stock",
+        partCost as "Cost",
+        PartCategories.categoryName as "Category",
+        Warehouses.cityLocation as "Warehouse",
+        PartCategories.categoryID as "",
+        Warehouses.warehouseID as ""
+      FROM Parts
+      JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
+      LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID
+      WHERE PartCategories.categoryID LIKE ${req.query.categoryID};`;
   } 
 
-  let query2 = `SELECT * FROM PartCategories;`;
-  let query3 = `SELECT 
-                  warehouseID as "ID",
-                  cityLocation as "City"
-                FROM Warehouses;`;
+  let query2 = 
+    `SELECT * FROM PartCategories;`;
+  let query3 = 
+    `SELECT 
+        warehouseID as "ID",
+        cityLocation as "City"
+      FROM Warehouses;`;
   db.pool.query(query1, function(error, rows, fields) { 
     let data = rows;
     db.pool.query(query2, function(error, rows, fields) { 
@@ -82,19 +86,20 @@ app.get('/', function(req, res){
         db.pool.query(query3, function(error, rows, fields) { 
           let warehouses = rows;
           // console.log(categories);
-            res.render('index', {data: data,
-                                categories: categories,
-                                warehouses: warehouses,
-                                title: 'Parts',
-                                helpers: {
-                                  // autoselects the correct category dropdown:
-                                  catSelected: function (catID){
-                                    if (catID == `${req.query.categoryID}`){
-                                      return "selected"
-                                    }
-                                  }
-                                }
-                              });
+            res.render('index', {
+              title: 'Parts',
+              data: data,
+              categories: categories,
+              warehouses: warehouses,
+              helpers: {
+                // autoselects the correct category dropdown:
+                catSelected: function (catID){
+                  if (catID == `${req.query.categoryID}`){
+                    return "selected"
+                  }
+                }
+              }
+            });
         })
     })
   })
@@ -105,13 +110,16 @@ app.post('/add-part-form', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    query1 = `INSERT INTO Parts (partName, partDescription, stockTotal, partCost, categoryID, warehouseID) VALUES (
-        '${data['input-partName']}', 
-        '${data['input-partDescription']}', 
-        ${data['input-stockTotal']}, 
-        ${data['input-partCost']}, 
-        ${data['input-categoryID']}, 
-        ${data['input-warehouseID']})`;
+    query1 = 
+    `INSERT INTO Parts 
+      (partName, partDescription, stockTotal, partCost, categoryID, warehouseID) 
+    VALUES (
+      '${data['input-partName']}', 
+      '${data['input-partDescription']}', 
+      ${data['input-stockTotal']}, 
+      ${data['input-partCost']}, 
+      ${data['input-categoryID']}, 
+      ${data['input-warehouseID']})`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error
@@ -133,7 +141,12 @@ app.post('/edit-part-form', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    let query1 = `UPDATE Parts SET stockTotal = ${data['input-stockTotal']}, warehouseID = ${data['select-city']} WHERE partID = ${data['select-partID']}`;
+    let query1 = 
+    `UPDATE Parts 
+      SET 
+        stockTotal = ${data['input-stockTotal']}, 
+        warehouseID = ${data['select-city']} 
+      WHERE partID = ${data['select-partID']}`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error
@@ -174,34 +187,38 @@ app.get('/energy-systems', function(req, res) {
   let query1; 
   
   if (req.query.systemID === undefined) {
-    query1 = `SELECT
-                systemID as ID, 
-                systemName as Name,
-                systemDescription as Description, 
-                estimatedInstallTime as Time, 
-                estimatedCustomerIncome as Income 
-              FROM EnergySystems;`;
+    query1 = 
+      `SELECT
+        systemID as ID, 
+        systemName as Name,
+        systemDescription as Description, 
+        estimatedInstallTime as Time, 
+        estimatedCustomerIncome as Income 
+      FROM EnergySystems;`;
   } else  {
-     query1 = `SELECT 
-                systemID as ID, 
-                systemName as Name,
-                systemDescription as Description, 
-                estimatedInstallTime as Time, 
-                estimatedCustomerIncome as Income 
-              FROM EnergySystems 
-              WHERE systemID LIKE "${req.query.systemID}";`
+     query1 = 
+      `SELECT 
+        systemID as ID, 
+        systemName as Name,
+        systemDescription as Description, 
+        estimatedInstallTime as Time, 
+        estimatedCustomerIncome as Income 
+      FROM EnergySystems 
+      WHERE systemID LIKE "${req.query.systemID}";`
   }
- let query2 = `SELECT
-                Parts.partName,
-                Parts.partID,
-                SystemParts.systemID as sysPartsID
-              FROM Parts
-              JOIN SystemParts ON SystemParts.partID = Parts.partID;`
+ let query2 = 
+  `SELECT
+    Parts.partName,
+    Parts.partID,
+    SystemParts.systemID as sysPartsID
+  FROM Parts
+  JOIN SystemParts ON SystemParts.partID = Parts.partID;`
     
-  let query3 = `SELECT
-                  partID	 
-                FROM SystemParts
-                WHERE systemID = "${req.query.systemID}";`
+  let query3 = 
+    `SELECT
+      partID	 
+    FROM SystemParts
+    WHERE systemID = "${req.query.systemID}";`
 
   
   db.pool.query(query1, function(error, rows, fields){
@@ -213,19 +230,20 @@ app.get('/energy-systems', function(req, res) {
       db.pool.query(query3, function(error, rows, fields){
         let systemParts = rows;
       
-          res.render('energy-systems', {data: data,
-                                      title: 'Energy Systems',
-                                      parts: parts,
-                                      systemParts: systemParts,
-                                      helpers: {
-                                        // checks off parts that are included in existing systems:
-                                        checked: function (sysPartsID){
-                                          if (sysPartsID == `${req.query.systemID}`){
-                                            return "checked"
-                                          }
-                                        }
-                                      }
-                                    });
+          res.render('energy-systems', {
+            title: 'Energy Systems',
+            data: data,
+            parts: parts,
+            systemParts: systemParts,
+            helpers: {
+              // checks off parts that are included in existing systems:
+              checked: function (sysPartsID){
+                if (sysPartsID == `${req.query.systemID}`){
+                  return "checked"
+                }
+              }
+            }
+          });
       });
     });  
   });
@@ -233,14 +251,17 @@ app.get('/energy-systems', function(req, res) {
 
 // ----- CATEGORIES PAGE ----- //
 app.get('/part-categories', function(req, res) {
-  let query1 = `SELECT 
-                  categoryID as ID,
-                  categoryName as Name
-                  FROM PartCategories;`;
+  let query1 = 
+    `SELECT 
+      categoryID as ID,
+      categoryName as Name
+    FROM PartCategories;`;
   
   db.pool.query(query1, function(error, rows, fields){
-    res.render('categories', {data: rows,
-                              title: 'Parts Categories'});
+    res.render('categories', {
+      title: 'Parts Categories',
+      data: rows
+    });
   })
 });
 
@@ -249,8 +270,9 @@ app.post('/add-category-form', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    query1 = `INSERT INTO PartCategories (categoryName) VALUES (
-        '${data['input-categoryName']}')`;
+    query1 = 
+      `INSERT INTO PartCategories (categoryName)
+      VALUES ('${data['input-categoryName']}')`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error
@@ -269,19 +291,22 @@ app.post('/add-category-form', function(req, res)
 
 // ----- WAREHOUSES PAGE ----- //
 app.get('/warehouses', function(req, res) {
-  let query1 = `SELECT 
-                  warehouseID as ID,
-                  phoneNumber as Phone,
-                  addressLine1 as Address,
-                  addressLine2 as Address2,
-                  cityLocation as City,
-                  stateLocation as State,
-                  zipCode as Zip
-                  FROM Warehouses;`;
+  let query1 = 
+    `SELECT 
+      warehouseID as ID,
+      phoneNumber as Phone,
+      addressLine1 as Address,
+      addressLine2 as Address2,
+      cityLocation as City,
+      stateLocation as State,
+      zipCode as Zip
+    FROM Warehouses;`;
   
   db.pool.query(query1, function(error, rows, fields){
-    res.render('warehouses', {data: rows,
-                              title: 'Warehouses'});
+    res.render('warehouses', {
+      title: 'Warehouses',
+      data: rows
+    });
   })
 });
 
@@ -290,13 +315,16 @@ app.post('/add-warehouse-form', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    query1 = `INSERT INTO Warehouses (phoneNumber, addressLine1, addressLine2, cityLocation, stateLocation, zipCode) VALUES (
-        '${data['input-warehousePhone']}', 
-        '${data['input-warehouseAddress']}', 
-        '${data['input-warehouseAddress2']}', 
-        '${data['input-warehouseCity']}', 
-        '${data['input-warehouseState']}', 
-        '${data['input-warehouseZip']}')`;
+    query1 = `
+    INSERT INTO Warehouses
+      (phoneNumber, addressLine1, addressLine2, cityLocation, stateLocation, zipCode) 
+    VALUES (
+      '${data['input-warehousePhone']}', 
+      '${data['input-warehouseAddress']}', 
+      '${data['input-warehouseAddress2']}', 
+      '${data['input-warehouseCity']}', 
+      '${data['input-warehouseState']}', 
+      '${data['input-warehouseZip']}')`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -315,16 +343,18 @@ app.post('/add-warehouse-form', function(req, res)
 
 // ----- INTERSECTIONS PAGE ----- //
 app.get('/intersection', function(req, res) {
-  let query1 = `SELECT
-                  systemPartsID as "ID",
-                  EnergySystems.systemName as "System",
-                  Parts.partName as "Part"
-                FROM SystemParts
-                JOIN EnergySystems ON EnergySystems.systemID = SystemParts.systemID
-                JOIN Parts ON Parts.partID = SystemParts.partID;`;
-
-  let query2 = `SELECT * FROM EnergySystems;`;
-  let query3 = `SELECT * FROM Parts;`;
+  let query1 = 
+    `SELECT
+      systemPartsID as "ID",
+      EnergySystems.systemName as "System",
+      Parts.partName as "Part"
+    FROM SystemParts
+    JOIN EnergySystems ON EnergySystems.systemID = SystemParts.systemID
+    JOIN Parts ON Parts.partID = SystemParts.partID;`;
+  let query2 = 
+    `SELECT * FROM EnergySystems;`;
+  let query3 =
+    `SELECT * FROM Parts;`;
   
   db.pool.query(query1, function(error, rows, fields) { 
     let data = rows;
@@ -333,10 +363,12 @@ app.get('/intersection', function(req, res) {
         db.pool.query(query3, function(error, rows, fields) { 
           let parts = rows;
           // console.log(parts);
-            res.render('intersection', {data: data,
-                                systems: systems,
-                                parts: parts,
-                                title: 'Intersection'});
+            res.render('intersection', {
+              title: 'Intersection',
+              data: data,
+              systems: systems,
+              parts: parts
+            });
         })
     })
   })
