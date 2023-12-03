@@ -258,6 +258,57 @@ app.get('/energy-systems', function(req, res) {
 });
 
 
+app.post('/add-energy-system-ajax', function(req, res){
+  // capture incoming data:
+  let data = req.body;
+
+  // capture Null values:
+ 
+  
+  let estimatedInstallTime = parseInt(data.estimatedInstallTime);
+  if (isNaN(estimatedInstallTime)){
+    estimatedInstallTime = "NULL"
+  }
+
+  let estimatedCustomerIncome = parseInt(data.estimatedCustomerIncome);
+  if (isNaN(estimatedCustomerIncome)) {
+    estimatedCustomerIncome = "NULL"
+  }
+
+
+  // queries for adding the energy system
+  query1 = 
+    `INSERT INTO EnergySystems(
+      systemName,
+      systemDescription,
+      estimatedInstallTime,
+      estimatedCustomerIncome)
+    VALUES (
+      '${data['systemName']}',
+      '${data['systemDescription']}', 
+      '${estimatedInstallTime}',
+      '${estimatedCustomerIncome}');`;
+      db.pool.query(query1, function(error, rows, fields) {
+        // check for an error:
+        if (error) {
+          console.log(error)
+          res.sendStatus(400);
+        } else {
+          query2 = 
+            `SELECT * FROM EnergySystems`;
+            db.pool.query(query2, function(error, rows, fields) {
+              // check for an error:
+              if (error) {
+                console.log(error);
+                res.sendStatus(400);
+              } else {
+                res.send(rows);
+              }
+            })
+        }
+      })
+});
+
 
 // ----- CATEGORIES PAGE ----- //
 app.get('/part-categories', function(req, res) {

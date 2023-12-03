@@ -19,7 +19,7 @@
     <div id="energy-systems-list">
       <form method="GET">
         <!-- table structure created with tablesgenerator.com-->
-        <table>
+        <table id="energy-systems-table">
           <thead>
             <tr>
               {{#each data.[0]}}
@@ -47,7 +47,7 @@
     <div id="energy-systems-edit" {{!class="hide-on-pageload"}}>
       <!-- table structure created with tablesgenerator.com-->
       <table>
-      <form>
+      <form "es-edit-form">
         <h2>
           Edit System Details
         </h2>
@@ -124,7 +124,7 @@
           </tr>
         </thead>
         <tbody>
-          <form>
+          <form id="es-add-form" >
             <tr>
               <td>
                 <input type="text" name="input-systemName" id="input-systemName" required />
@@ -139,8 +139,8 @@
                 <input type="number" name="input-estimatedCustomerIncome" id="input-estimatedCustomerIncome" />
               </td>
               <td>
-                <button onclick="hideForm('energy-systems-create')">Save</button>
-                <button onclick="hideForm('energy-systems-create')">Cancel</button>
+                <input type="submit">
+                <!-- <button onclick="hideForm('energy-systems-create')">Cancel</button> -->
               </td>
             </tr>
             <tr>
@@ -166,7 +166,7 @@
 
 </div>
 
-
+<!-- Shows and hides forms as necessary -->
 <script>
   if (pageQuery === '') {
     hideForm('energy-systems-edit');
@@ -174,11 +174,11 @@
   if (pageQuery !== '') {
     hideForm('energy-systems-list');
     hideForm('create-new-system')
-  };
-  
-  
-
+  }; 
 </script>
+
+<script src="./js/add_energy_system.js"></script>
+
 
 </main>
 
