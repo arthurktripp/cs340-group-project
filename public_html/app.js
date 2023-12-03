@@ -1,10 +1,10 @@
+
 // Constructed using course materials in CS340
-
-/*
-  SETUP
-*/
-
 // app.js
+
+/* ************************
+ -------- SETUP -------- //
+**************************/ 
 
 // EXPRESS
 var express = require('express'); 
@@ -23,17 +23,12 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'));              // defines the folder for linking css & js
 
 
-
 //DATABASE
 var db = require('./database/db-connector');
 
 
 /* *************************
  -------- ROUTES -------- //
-***************************/ 
-
-/* *************************
- ----- RENDER PAGES ----- //
 ***************************/ 
 
 // ----- PARTS PAGE ----- //
@@ -318,13 +313,16 @@ app.post('/add-energy-system-ajax', function(req, res){
                     query4 = `
                       INSERT INTO SystemParts
                         (systemID, partID)
-                      VALUES (${newEnergySystemID},${newEnergySystemPartID});`
-                          db.pool.query(query4, function(error, rows, fields) {
-                            if (error) {
-                              console.log(error)
-                              res.sendStatus(400);
-                            }              
-                          })
+                      VALUES (
+                        ${newEnergySystemID},
+                        ${newEnergySystemPartID});`
+                      
+                      db.pool.query(query4, function(error, rows, fields) {
+                        if (error) {
+                          console.log(error)
+                          res.sendStatus(400);
+                        }              
+                      })
                       })
                 })
               }
