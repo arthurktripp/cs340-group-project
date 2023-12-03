@@ -2,15 +2,20 @@
 
 let addEnergySystemForm = document.getElementById('es-add-form');
 
+
 // Modify the needed objects:
 addEnergySystemForm.addEventListener("submit", function(e){
   e.preventDefault();
+
+  let systemPartsValues = [];
 
   // Get the necessary fields:
   let inputSystemName = document.getElementById('input-systemName');
   let inputSystemDescription = document.getElementById('input-systemDescription');
   let inputEstimatedInstallTime = document.getElementById('input-estimatedInstallTime');
   let inputEstimatedCustomerIncome = document.getElementById('input-estimatedCustomerIncome');
+  let inputSystemParts = document.getElementsByName('input-systemParts');
+  
 
   // Get values from form fields:
   let systemNameValue = inputSystemName.value;
@@ -18,12 +23,21 @@ addEnergySystemForm.addEventListener("submit", function(e){
   let estimatedInstallTimeValue = inputEstimatedInstallTime.value;
   let estimatedCustomerIncomeValue = inputEstimatedCustomerIncome.value;
 
+  // create a list of checked values
+  inputSystemParts.forEach(function(each){
+    if (each.checked) {
+      systemPartsValues.push(each.value);
+    }
+  });
+
+
   // Add data to a javascript object:
   let data = {
     systemName: systemNameValue,
     systemDescription: systemDescriptionValue,
     estimatedInstallTime: estimatedInstallTimeValue,
-    estimatedCustomerIncome: estimatedCustomerIncomeValue
+    estimatedCustomerIncome: estimatedCustomerIncomeValue,
+    systemParts: systemPartsValues
   };
 
   // AJAX Request:
@@ -88,3 +102,4 @@ addRowToTable = (data) => {
   // Add the row to the table:
   currentTable.appendChild(row);
 }
+

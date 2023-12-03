@@ -93,7 +93,7 @@
                 <div class="parts-checks">
                   {{#each parts}}
                   <div>
-                    <input type="checkbox" value="{{this.partID}}"
+                    <input type="checkbox" value="{{this.partID}}" 
                     {{#checked this.checked}}{{/checked}} >
                       <label>{{this.partName}}</label>
                   </div>
@@ -147,10 +147,14 @@
               <td colspan="5" >
                 <div class="parts-checks">
                   {{#each parts}}
-                  <div><input 
+                  <div>
+                    <input 
                     type="checkbox" 
-                    value="{{this.partID}}">
-                      <label>{{this.partName}}</label>
+                    value="{{this.partID}}"
+                    id="check-{{this.partID}}"
+                    name="input-systemParts"
+                    >
+                      <label for="check-{{this.partID}}">{{this.partName}}</label>
                   </div>
                   {{/each}}
                 </div>   

@@ -261,15 +261,13 @@ app.get('/energy-systems', function(req, res) {
 app.post('/add-energy-system-ajax', function(req, res){
   // capture incoming data:
   let data = req.body;
+  console.log(data);
 
   // capture Null values:
- 
-  
   let estimatedInstallTime = parseInt(data.estimatedInstallTime);
   if (isNaN(estimatedInstallTime)){
     estimatedInstallTime = "NULL"
   }
-
   let estimatedCustomerIncome = parseInt(data.estimatedCustomerIncome);
   if (isNaN(estimatedCustomerIncome)) {
     estimatedCustomerIncome = "NULL"
@@ -303,6 +301,32 @@ app.post('/add-energy-system-ajax', function(req, res){
                 res.sendStatus(400);
               } else {
                 res.send(rows);
+
+                // Get the systemID of the system we just added
+                query3 = `SELECT MAX(systemID) as maxID from EnergySystems`;
+                db.pool.query(query3, function(error, rows, fields) {
+                  if (error) {
+                    console.log(error)
+                    res.sendStatus(400);
+                  } else {
+                    newEnergySystemID = rows[0]['maxID']; 
+                  }
+
+                  // Iterate through the checked parts and add them to the system
+                  data.systemParts.forEach(function(each){
+                    let newEnergySystemPartID = each;                   
+                    query4 = `
+                      INSERT INTO SystemParts
+                        (systemID, partID)
+                      VALUES (${newEnergySystemID},${newEnergySystemPartID});`
+                          db.pool.query(query4, function(error, rows, fields) {
+                            if (error) {
+                              console.log(error)
+                              res.sendStatus(400);
+                            }              
+                          })
+                      })
+                })
               }
             })
         }
