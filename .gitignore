@@ -1,4 +1,5 @@
-/node_modules
+#git ignore
+node_modules
 db-connector.js
 *.env
 *.env.example
