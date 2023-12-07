@@ -1,5 +1,6 @@
 
 // Constructed using course materials in CS340
+// Adapted from provided materials
 // app.js
 
 /* ************************
@@ -168,8 +169,8 @@ app.delete('/delete-part-ajax/', function(req,res,next){
             if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
+            	console.log(error);
+            	res.sendStatus(400);
             }
             else
             {
