@@ -116,8 +116,13 @@ span.faux-button {
   background-color: #eee;
   outline: 1px solid #555;
   border-radius: 2px;
+  margin-right: 1em;
+
 }
-span.faux-button a {
+span.faux-button:hover {
+  background-color: #ddd;
+  }
+.faux-button {
   text-decoration: none;
   color: #333;
 }

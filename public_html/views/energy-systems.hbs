@@ -8,8 +8,8 @@
   <h2>Energy Systems</h2>
     <div class="page-description">
       Manage the Energy Systems that we can assemble and sell.<br>
-      The number available is based on current inventories of necessary parts.<br>
-      From a system's details view, click edit to change elements like the description or parts necessary parts, or delete the system entirely. 
+      Click Edit/Details to make updates to the systems' attributes or delete the system entirely.<br>
+      You can add, remove, and update parts that are associated with any system in the Edit/Details view. 
     </div> 
 
     <div id="create-new-system">
@@ -128,9 +128,9 @@
               <td><input type="number" id="edit-customer-income" value="{{this.Income}}" /></td>
               <td>
                 <div class="form-buttons">
-                  <input type="submit" action="/">
-                  <button onclick="deleteEnergySystem({{this.ID}})">Delete</button>
-                  <span class="faux-button"><a href="/energy-systems" >Cancel</a></span>
+                  <input type="submit" action="/energy-systems" onclick="location.href='/energy-systems'">
+                  <a class="faux-button" href="/energy-systems" onclick="deleteSystem({{this.ID}})"><span class="faux-button">Delete</span></a>
+                  <a class="faux-button" href="/energy-systems"><span class="faux-button">Cancel</span></a>
                 </div>
               </td>
             </tr>
@@ -170,5 +170,5 @@
 
 <script src="./js/add_energy_system.js"></script>
 <script src="./js/update_energy_system.js"></script>
-
+<script src="./js/delete-energy-system.js"></script>
 

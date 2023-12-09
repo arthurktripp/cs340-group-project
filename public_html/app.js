@@ -504,7 +504,22 @@ app.put('/put-energy-system-ajax', function(req, res) {
   });
 });
 
+app.delete('/delete-system-ajax/', function(req,res,next){
+  let data = req.body;
+  let systemID = parseInt(data.id);
+  let deleteSystem = `DELETE FROM EnergySystems WHERE systemID = ?`;
+  let deleteBsg_People= `DELETE FROM bsg_people WHERE id = ?`;
 
+
+        // Run the 1st query
+        db.pool.query(deleteSystem, [systemID], function(error, rows, fields){
+            if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+})});
 
 
 
