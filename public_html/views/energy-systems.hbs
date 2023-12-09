@@ -44,16 +44,16 @@
       </form>
     </div>
 
-    <div id="energy-systems-edit" {{!class="hide-on-pageload"}}>
+    <div id="energy-systems-edit">
       <!-- table structure created with tablesgenerator.com-->
-      <table>
-      <form "es-edit-form">
+      <table id="es-edit-table">
+      <form id="es-edit-form">
         <h2>
           Edit System Details
         </h2>
       
           <div class="form-buttons">
-              <button onclick="hideForm('energy-systems-edit'); displayForm('energy-systems-details')">Save</button>
+              <input type="submit" action="/">
               <button action="/">Cancel</button>
               <button onclick="confirmDelete('energy-systems-edit', 'energy-systems-details')">Delete</button>
           </div>
@@ -71,37 +71,27 @@
 
             {{#each data}}
             <tr>
-              <td>{{this.ID}}</td>
-              <td>
-                <input type="text" id="system-name" value="{{this.Name}}" />
-              </td>
-              <td>
-                <textarea id="sys_description" rows="4">{{this.Description}}</textarea>
-              </td>
-              <td>
-                <input type="number" id="install_time" value="{{this.Time}}" />
-              </td>
-              <td>
-                <input type="number" id="customer_income" value="{{this.Income}}" />
-              </td>
-
-              
+              <td id="edit-system-id" data-systemID="{{this.ID}}">{{this.ID}}</td>
+              <td><input type="text" id="edit-system-name" value="{{this.Name}}" /></td>
+              <td><textarea id="edit-system-description" rows="4">{{this.Description}}</textarea></td>
+              <td><input type="number" id="edit-install-time" value="{{this.Time}}" /></td>
+              <td><input type="number" id="edit-customer-income" value="{{this.Income}}" /></td>
             </tr>
             {{/each}}
+            
             <tr>
               <td colspan="5" >
                 <div class="parts-checks">
                   {{#each parts}}
-                  <div>
-                    <input type="checkbox" value="{{this.partID}}" 
+                  <div class="parts-check-item">
+                    <input type="checkbox" name="edit-system-parts" value="{{this.partID}}" id="system-part-{{this.partID}}"
                     {{#checked this.checked}}{{/checked}} >
-                      <label>{{this.partName}}</label>
+                      <label for="system-part-{{this.partID}}">{{this.partName}}</label>
                   </div>
                   {{/each}}
-                </div>  
+                </div>
               </td>
             </tr>
-
 
           </form>
         </tbody>
@@ -182,7 +172,7 @@
 </script>
 
 <script src="./js/add_energy_system.js"></script>
-
+<script src="./js/update_energy_system.js"></script>
 
 </main>
 
