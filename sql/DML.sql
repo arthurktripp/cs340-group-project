@@ -157,7 +157,18 @@ INSERT INTO SystemParts
 	(systemID, partID)
 	VALUES (:systemIDInput, :partIDInput);
 
--- update not needed
+-- update
+UPDATE EnergySystems
+SET
+	systemName = systemName,
+	systemDescription = systemDescription,
+	estimatedInstallTime = estimatedInstallTime,
+	estimatedCustomerIncome = estimatedCustomerIncome
+WHERE
+	systemID = systemID
+;
+
+
 -- delete...just in case
 DELETE FROM SystemParts
 WHERE partID = :partIDInput AND systemID = :systemIDInput;

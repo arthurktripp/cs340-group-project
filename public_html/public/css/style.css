@@ -121,9 +121,20 @@ div.parts-checks {
   margin-left:auto;
   margin-right: auto;
   display: grid;
-  grid-template-columns:25% 25% 25%;
-
+  grid-template-columns:25% 25% 25% 25%;
 }
+div.parts-check-item {
+  outline: 2px solid #ccc;
+  padding: .5em 1em; 
+  margin: .5em; 
+}
+div.parts-check-item:hover {
+  outline: 2px solid #ccc;
+  background-color: #f3f3f3;
+  padding: .5em 1em; 
+  margin: .5em; 
+}
+
 
 div#display-all-forms button {
   background-color:plum;

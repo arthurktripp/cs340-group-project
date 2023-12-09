@@ -1,7 +1,10 @@
+/* add_energy_system.js*/
+
+/* *****************************
+ -------- ADD System -------- //
+*******************************/ 
 // Get objects to modify:
-
 let addEnergySystemForm = document.getElementById('es-add-form');
-
 
 // Modify the needed objects:
 addEnergySystemForm.addEventListener("submit", function(e){
