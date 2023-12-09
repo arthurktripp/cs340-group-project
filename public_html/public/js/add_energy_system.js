@@ -59,6 +59,12 @@ addEnergySystemForm.addEventListener("submit", function(e){
       inputSystemDescription.value = '';
       inputEstimatedInstallTime.value = '';
       inputEstimatedCustomerIncome.value = '';
+      inputSystemParts = document.getElementsByName('input-systemParts')
+      inputSystemParts.forEach(function(each){
+        each.checked = false;
+        });
+    
+      
     
     } else if (xhttp.readyState == 4 && xhttp.status !== 200) {
       console.log('There was an error with the input.')
@@ -86,7 +92,8 @@ addRowToTable = (data) => {
   let systemNameCell = document.createElement('td');
   let systemDescriptionCell = document.createElement('td');
   let estimatedInstallTimeCell = document.createElement('td');
-  let estimatedCustomerIncomeCell = document.createElement('td');
+  let estimatedCustomerIncomeCell = document.createElement('td')
+  let editDeleteCell = document.createElement('td');
 
   // Fill the cells with the new data:
   idCell.innerText = newRow.systemID;
@@ -95,13 +102,18 @@ addRowToTable = (data) => {
   estimatedInstallTimeCell.innerText = newRow.estimatedInstallTime;
   estimatedCustomerIncomeCell.innerText = newRow.estimatedCustomerIncome;
 
+
+
   // Add the cells to the row:
   row.appendChild(idCell);
   row.appendChild(systemNameCell);
   row.appendChild(systemDescriptionCell);
   row.appendChild(estimatedInstallTimeCell);
   row.appendChild(estimatedCustomerIncomeCell);
+  row.appendChild(editDeleteCell);
 
+
+  
   // Add the row to the table:
   currentTable.appendChild(row);
 }
