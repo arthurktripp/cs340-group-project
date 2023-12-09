@@ -2,10 +2,20 @@
 <h1>Renewable Energy Systems Supply</h1>
 <nav>
   <ul>
-    <a href="/"><li>Parts</li></a>
-    <a href="energy-systems"><li>Energy Systems</li></a>
-    <a href="part-categories"><li>Categories</li></a>
-    <a href="warehouses"><li>Warehouses</li></a>
-    <a href="intersection"><li>Energy System Parts</li></a>
+    <a href="/" {{#if navParts}}class="nav-active"{{/if}}>
+      <li>Parts</li>
+    </a>
+    <a href="energy-systems" {{#if navES}}class="nav-active"{{/if}}>
+      <li>Energy Systems</li>
+    </a>
+    <a href="part-categories" {{#if navCat}}class="nav-active"{{/if}}>
+      <li>Categories</li>
+    </a>
+    <a href="warehouses" {{#if navWare}}class="nav-active"{{/if}}>
+      <li>Warehouses</li>
+    </a>
+    <a href="intersection" {{#if navESP}}class="nav-active"{{/if}}>
+      <li>Energy System Parts</li>
+    </a>
   </ul>
 </nav>

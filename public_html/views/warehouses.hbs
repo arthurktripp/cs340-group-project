@@ -19,19 +19,18 @@
             {{@key}}
           </th>
           {{/each}}
-          <th></th>
         </tr>
       </thead>
       <tbody>
         {{#each data}}
           <tr data-value={{this.ID}}>
             <td>{{this.ID}}</td>
-            <td>{{this.Phone}}</td>
             <td>{{this.Address}}</td>
             <td>{{this.Address2}}</td>
             <td>{{this.City}}</td>
             <td>{{this.State}}</td>
             <td>{{this.Zip}}</td>
+            <td>{{this.Phone}}</td>
           </tr>
         {{/each}}
       </tbody>
@@ -47,19 +46,17 @@
         <form id="add-warehouse-form" method="POST" action="/add-warehouse-form">
           <thead>
             <tr>
-              <th>Phone</th>
               <th>Address</th>
               <th>Address2</th>
               <th>City</th>
               <th>State</th>
               <th>Zip</th>
+              <th>Phone</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
-                <input type="text" name="input-warehousePhone" id="input-warehousePhone">
-              </td>
               <td>
                 <input type="text" name="input-warehouseAddress" id="input-warehouseAddress">
               </td>
@@ -74,6 +71,9 @@
               </td>
               <td>
                 <input type="text" name="input-warehouseZip" id="input-warehouseZip">
+              </td>
+              <td>
+                <input type="text" name="input-warehousePhone" id="input-warehousePhone">
               </td>
               <td>
                 <input type="submit" value="Save">

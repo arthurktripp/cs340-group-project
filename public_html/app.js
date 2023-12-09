@@ -88,6 +88,7 @@ app.get('/', function(req, res){
           data: data,
           categories: categories,
           warehouses: warehouses,
+          navParts: true,
           helpers: {
             // autoselects the correct category dropdown:
             catSelected: function (catID){
@@ -170,6 +171,7 @@ app.delete('/delete-part-ajax/', function(req,res,next){
     }
 })});
 
+
 // ----- ENERGY SYSTEMS PAGE ----- //
 app.get('/energy-systems', function(req, res) {
   let query1; 
@@ -231,6 +233,7 @@ app.get('/energy-systems', function(req, res) {
           data: data,
           parts: parts,
           systemParts: systemParts,
+          navES: true,
           helpers: {
             // checks off parts that are included in existing systems:
             checked: function (includes){
@@ -516,6 +519,7 @@ app.get('/part-categories', function(req, res) {
   db.pool.query(query1, function(error, rows, fields){
     res.render('categories', {
       title: 'Parts Categories',
+      navCat: true,
       data: rows
     });
   })
@@ -550,18 +554,19 @@ app.get('/warehouses', function(req, res) {
   let query1 = 
     `SELECT 
       warehouseID as ID,
-      phoneNumber as Phone,
       addressLine1 as Address,
       addressLine2 as Address2,
       cityLocation as City,
       stateLocation as State,
-      zipCode as Zip
+      zipCode as Zip,
+      phoneNumber as Phone
     FROM Warehouses;`;
   
   db.pool.query(query1, function(error, rows, fields){
     res.render('warehouses', {
       title: 'Warehouses',
-      data: rows
+      navWare: true,
+      data: rows,
     });
   })
 });
@@ -625,6 +630,7 @@ app.get('/intersection', function(req, res) {
           title: 'Intersection',
           data: data,
           systems: systems,
+          navESP: true,
           parts: parts
         });
       })

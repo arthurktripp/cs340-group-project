@@ -19,9 +19,11 @@ nav li {
   padding: 1em 1.5em;
   background-color: #a3e1c4;
 }
+a.nav-active li,
 nav li:hover {
   background-color: #7ed5ac;
 }
+
 nav a {
   color: #333;
   text-decoration: none;
@@ -62,7 +64,10 @@ table {
 }
 td {
 	padding: .5em;
-  vertical-align:top;
+  vertical-align:center ;
+}
+tr:nth-child(even) {
+  background-color: #efefef;
 }
 th {
   text-align: left;
