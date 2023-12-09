@@ -94,6 +94,17 @@ button, input[type=submit] {
   font-size: 1em;
 }
 
+span.faux-button {
+  padding: 5px 15px;
+  background-color: #eee;
+  outline: 1px solid #555;
+  border-radius: 2px;
+}
+span.faux-button a {
+  text-decoration: none;
+  color: #333;
+}
+
 div.inline-buttons {
   display: inline;
 }
@@ -121,7 +132,7 @@ div.parts-checks {
   margin-left:auto;
   margin-right: auto;
   display: grid;
-  grid-template-columns:25% 25% 25% 25%;
+  grid-template-columns:25% 25% 25%;
 }
 div.parts-check-item {
   outline: 2px solid #ccc;

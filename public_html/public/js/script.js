@@ -17,6 +17,7 @@ function hideForm(id) {
   // }
 };
 
+/*
 function confirmDelete(hide1, hide2) {
   confirmation = confirm('Are you sure you want to delete this record? This action cannot be undone.');
   if (confirmation == true ){
@@ -25,7 +26,7 @@ function confirmDelete(hide1, hide2) {
   }
   return;
 };
-
+*/
 
 /* Used for developement */
 function displayAllForms(divclass) {
