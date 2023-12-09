@@ -31,10 +31,17 @@ nav a {
 
 header {
   padding: 1em 2em;
-
+}
+header div {
+  position: fixed;
+  top: 0px;
+  background-color: #fff;
+  width: 100%;
+  padding-bottom: 1em;
+  padding-top: 1em;
 }
 main {
-  padding: 1em 2em; 
+  padding: 7em 2em; 
 }
 
 div.page-description {
@@ -62,11 +69,16 @@ table {
   max-width: 100%;
   min-width: 100%
 }
+thead.sticky {
+  position: sticky;
+  top: 8em;
+}
+
 td {
 	padding: .5em;
   vertical-align:center ;
 }
-tr:nth-child(even) {
+tr:nth-child(even):not(.system-parts) {
   background-color: #efefef;
 }
 th {
@@ -137,19 +149,14 @@ div.parts-checks {
   margin-left:auto;
   margin-right: auto;
   display: grid;
-  grid-template-columns:25% 25% 25%;
+  grid-template-columns:25% 25% 25% 25%;
 }
 div.parts-check-item {
-  outline: 2px solid #ccc;
-  padding: .5em 1em; 
-  margin: .5em; 
+  
+  padding: .25em 1em; 
+  margin: .25em; 
 }
-div.parts-check-item:hover {
-  outline: 2px solid #ccc;
-  background-color: #f3f3f3;
-  padding: .5em 1em; 
-  margin: .5em; 
-}
+
 
 
 div#display-all-forms button {
@@ -174,4 +181,8 @@ button.inactive {
   width: fit-content;
   margin-left: auto;
   margin-right: 1em;
+}
+
+div#page-options {
+  margin-bottom: 2em;
 }

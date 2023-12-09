@@ -1,6 +1,6 @@
 <!-- energy-systems.hbs -->
 
-<main>
+
 <script>
 
 </script>
@@ -12,15 +12,71 @@
       From a system's details view, click edit to change elements like the description or parts necessary parts, or delete the system entirely. 
     </div> 
 
-<div id="create-new-system">
+    <div id="create-new-system">
       <button onclick="displayForm('energy-systems-create')">Create New System</button>
+    </div>
+    <div id="energy-systems-create" class="hide-on-pageload">
+      <h2>
+        Create a New Energy System
+      </h2>
+      <!-- table structure created with tablesgenerator.com-->
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Install Time</th>
+            <th>Customer Income</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <form id="es-add-form" >
+            <tr>
+              <td>
+                <input type="text" name="input-systemName" id="input-systemName" required />
+              </td>
+              <td>
+                <textarea rows="4" name="input-systemDescription" id="input-systemDescription"></textarea>
+              </td>
+              <td>
+                <input type="number" name="input-estimatedInstallTime" id="input-estimatedInstallTime" />
+              </td>
+              <td>
+                <input type="number" name="input-estimatedCustomerIncome" id="input-estimatedCustomerIncome" />
+              </td>
+              <td>
+                <input type="submit">
+                <!-- <button onclick="hideForm('energy-systems-create')">Cancel</button> -->
+              </td>
+            </tr>
+            <tr>
+              <td colspan="5" >
+                <div class="parts-checks">
+                  {{#each parts}}
+                  <div>
+                    <input 
+                    type="checkbox" 
+                    value="{{this.partID}}"
+                    id="check-{{this.partID}}"
+                    name="input-systemParts"
+                    >
+                      <label for="check-{{this.partID}}">{{this.partName}}</label>
+                  </div>
+                  {{/each}}
+                </div>   
+              </td>
+            </tr>
+          </form>
+        </tbody>
+      </table>
     </div>
 
     <div id="energy-systems-list">
       <form method="GET">
         <!-- table structure created with tablesgenerator.com-->
         <table id="energy-systems-table">
-          <thead>
+          <thead class="sticky">
             <tr>
               {{#each data.[0]}}
               <th>{{@key}}</th>
@@ -80,8 +136,8 @@
             </tr>
             {{/each}}
             
-            <tr>
-              <td colspan="5" >
+            <tr class="system-parts">
+              <td colspan="6">
                 <div class="parts-checks">
                   {{#each parts}}
                   <div class="parts-check-item">
@@ -100,67 +156,6 @@
         </table>
     </div>
 
-    <div id="energy-systems-create" class="hide-on-pageload">
-      <h2>
-        Create a New Energy System
-      </h2>
-      <!-- table structure created with tablesgenerator.com-->
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Install Time</th>
-            <th>Customer Income</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <form id="es-add-form" >
-            <tr>
-              <td>
-                <input type="text" name="input-systemName" id="input-systemName" required />
-              </td>
-              <td>
-                <textarea rows="4" name="input-systemDescription" id="input-systemDescription"></textarea>
-              </td>
-              <td>
-                <input type="number" name="input-estimatedInstallTime" id="input-estimatedInstallTime" />
-              </td>
-              <td>
-                <input type="number" name="input-estimatedCustomerIncome" id="input-estimatedCustomerIncome" />
-              </td>
-              <td>
-                <input type="submit">
-                <!-- <button onclick="hideForm('energy-systems-create')">Cancel</button> -->
-              </td>
-            </tr>
-            <tr>
-              <td colspan="5" >
-                <div class="parts-checks">
-                  {{#each parts}}
-                  <div>
-                    <input 
-                    type="checkbox" 
-                    value="{{this.partID}}"
-                    id="check-{{this.partID}}"
-                    name="input-systemParts"
-                    >
-                      <label for="check-{{this.partID}}">{{this.partName}}</label>
-                  </div>
-                  {{/each}}
-                </div>   
-              </td>
-            </tr>
-          </form>
-        </tbody>
-      </table>
-    </div>
-
-<div>
-
-
-</div>
 
 <!-- Shows and hides forms as necessary -->
 <script>
@@ -176,5 +171,4 @@
 <script src="./js/add_energy_system.js"></script>
 <script src="./js/update_energy_system.js"></script>
 
-</main>
 

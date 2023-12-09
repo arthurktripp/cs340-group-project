@@ -1,36 +1,14 @@
 <!-- categories.hbs -->
 
-<main>
-  <h2>Parts Categories</h2>
-    <div class="page-description">
-      Add or view categories to keep the parts inventory organized. 
-    </div> 
 
-    <div class="new-category inline-buttons">
-      <button onclick="displayForm('create-category')">Add New Category</button>
-    </div>
+<h2>Parts Categories</h2>
+  <div class="page-description">
+    Add or view categories to keep the parts inventory organized. 
+  </div> 
 
-
-<table id="categories-table">
-  <thead>
-    <tr>
-      {{#each data.[0]}}
-      <th>
-        {{@key}}
-      </th>
-      {{/each}}
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each data}}
-      <tr data-value={{this.ID}}>
-        <td>{{this.ID}}</td>
-        <td>{{this.Name}}</td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+  <div class="new-category inline-buttons">
+    <button onclick="displayForm('create-category')">Add New Category</button>
+  </div>
 
 <div id="create-category" class="hide-on-pageload">
   <h2 style="display: inline; margin-right: 2em;">Create New Category</h2>
@@ -59,5 +37,27 @@
   </table>
 </div>
 
+<table id="categories-table">
+  <thead class="sticky">
+    <tr>
+      {{#each data.[0]}}
+      <th>
+        {{@key}}
+      </th>
+      {{/each}}
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr data-value={{this.ID}}>
+        <td>{{this.ID}}</td>
+        <td>{{this.Name}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
 
-</main>
+
+
+

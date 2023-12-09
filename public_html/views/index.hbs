@@ -1,87 +1,26 @@
 <!-- index.hbs -->
 
-<main>
   <h2>Parts Inventory</h2>
     <div class="page-description">
       View and add parts that we stock in our warehouses, and update their quantities as you ship and receive orders.
     </div> 
 
   <div id="page-options">
-      <form class="db-filter" method="GET" action="/"  >
-        <label>Filter by Category: </label>
-        <select id="category" onchange="this.form.submit();" name="categoryID">
-          <option value="all">All</option>
-          {{#each categories}}
-            <option value="{{this.categoryID}}" {{#catSelected this.categoryID}}{{/catSelected}}>{{this.categoryName}}</option>
-          {{/each}}
-        </select>
-      </form>
-
-      <div class="new-part inline-buttons">
-        <button onclick="displayForm('create-part')">Add New Part</button>
-      </div>
-
-    </div>
-
-<table id="part-table">
-  <thead>
-    <tr>
-      {{#each data.[0]}}
-      <th>
-        {{@key}}
-      </th>
-      {{/each}}
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each data}}
-      <tr data-value={{this.ID}}>
-        <td>{{this.ID}}</td>
-        <td>{{this.Name}}</td>
-        <td>{{this.Description}}</td>
-        <td>{{this.Stock}}</td>
-        <td>{{this.Cost}}</td>
-        <td>{{this.Category}}</td>
-        <td>{{this.Warehouse}}</td>
-        <td><button onclick="displayForm('edit-part')">Update</button></td>
-        <td><button onclick="deletePart({{this.ID}})">Delete</button></td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
-
-
-<div id="edit-part" class="hide-on-pageload">
-  <h2>Update Part</h2>
-  <p>Update a part's quantity or location.</p>
-  <!-- table structure created with tablesgenerator.com-->
-    <form id="edit-part-form" method="POST" action="/edit-part-form">
-      <label for="input-stockTotal">Quantity: </label>
-      <input type="number" name="input-stockTotal" id="input-stockTotal" required>
-      
-      <select name="select-partID" id="select-partID" required>
-        <option selected disabled>Part Name</option>
-        {{#each data}}
-          <option value="{{this.ID}}">{{this.Name}}</option>
+    <form class="db-filter" method="GET" action="/"  >
+      <label>Filter by Category: </label>
+      <select id="category" onchange="this.form.submit();" name="categoryID">
+        <option value="all">All</option>
+        {{#each categories}}
+          <option value="{{this.categoryID}}" {{#catSelected this.categoryID}}{{/catSelected}}>{{this.categoryName}}</option>
         {{/each}}
       </select>
-
-      <select name="select-city" id="select-city" required>
-        <option selected disabled>Warehouse City</option>
-        {{#each warehouses}}
-          <option value="{{this.ID}}">{{this.City}}</option>
-        {{/each}}
-        <option value="NULL">NO LOCATION</option>
-      </select>
-
-      <button onclick="hideFormCheck('edit-part')">Save</button>
-          
     </form>
-  </table>
-</div>
 
-<div id="create-part" class="hide-on-pageload">
+    <div class="new-part inline-buttons">
+      <button onclick="displayForm('create-part')">Add New Part</button>
+    </div>
+  </div>
+  <div id="create-part" class="hide-on-pageload">
   <h2 style="display: inline; margin-right: 2em;">Create New Part</h2>
   <div class="inline-buttons">
     <button onclick="hideForm('create-part')" >Cancel</button>  
@@ -139,4 +78,63 @@
   </table>
 </div>
 
-</main>
+<table id="part-table">
+  <thead class="sticky">
+    <tr>
+      {{#each data.[0]}}
+      <th>
+        {{@key}}
+      </th>
+      {{/each}}
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr data-value={{this.ID}}>
+        <td>{{this.ID}}</td>
+        <td>{{this.Name}}</td>
+        <td>{{this.Description}}</td>
+        <td>{{this.Stock}}</td>
+        <td>{{this.Cost}}</td>
+        <td>{{this.Category}}</td>
+        <td>{{this.Warehouse}}</td>
+        <td><button onclick="displayForm('edit-part')">Update</button></td>
+        <td><button onclick="deletePart({{this.ID}})">Delete</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+
+<div id="edit-part" class="hide-on-pageload">
+  <h2>Update Part</h2>
+  <p>Update a part's quantity or location.</p>
+  <!-- table structure created with tablesgenerator.com-->
+    <form id="edit-part-form" method="POST" action="/edit-part-form">
+      <label for="input-stockTotal">Quantity: </label>
+      <input type="number" name="input-stockTotal" id="input-stockTotal" required>
+      
+      <select name="select-partID" id="select-partID" required>
+        <option selected disabled>Part Name</option>
+        {{#each data}}
+          <option value="{{this.ID}}">{{this.Name}}</option>
+        {{/each}}
+      </select>
+
+      <select name="select-city" id="select-city" required>
+        <option selected disabled>Warehouse City</option>
+        {{#each warehouses}}
+          <option value="{{this.ID}}">{{this.City}}</option>
+        {{/each}}
+        <option value="NULL">NO LOCATION</option>
+      </select>
+
+      <button onclick="hideFormCheck('edit-part')">Save</button>
+          
+    </form>
+  </table>
+</div>
+
+
+

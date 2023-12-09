@@ -1,6 +1,5 @@
 <!-- warehouses.hbs -->
 
-<main>
   <h2>Warehouses</h2>
     <div class="page-description">
       Information about our warehouses. 
@@ -9,34 +8,7 @@
         <div class="new-warehouse inline-buttons">
           <button onclick="displayForm('create-warehouse')">Add New Warehouse</button>
         </div>
-
-
-    <table id="warehouses-table">
-      <thead>
-        <tr>
-          {{#each data.[0]}}
-          <th>
-            {{@key}}
-          </th>
-          {{/each}}
-        </tr>
-      </thead>
-      <tbody>
-        {{#each data}}
-          <tr data-value={{this.ID}}>
-            <td>{{this.ID}}</td>
-            <td>{{this.Address}}</td>
-            <td>{{this.Address2}}</td>
-            <td>{{this.City}}</td>
-            <td>{{this.State}}</td>
-            <td>{{this.Zip}}</td>
-            <td>{{this.Phone}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-
-    <div id="create-warehouse" class="hide-on-pageload">
+            <div id="create-warehouse" class="hide-on-pageload">
       <h2 style="display: inline; margin-right: 2em;">Create New warehouse</h2>
       <div class="inline-buttons">
         <button onclick="hideForm('create-warehouse')">Cancel</button>  
@@ -84,4 +56,31 @@
       </table>
     </div>
 
-</main>
+
+    <table id="warehouses-table">
+      <thead class="sticky">
+        <tr>
+          {{#each data.[0]}}
+          <th>
+            {{@key}}
+          </th>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          <tr data-value={{this.ID}}>
+            <td>{{this.ID}}</td>
+            <td>{{this.Address}}</td>
+            <td>{{this.Address2}}</td>
+            <td>{{this.City}}</td>
+            <td>{{this.State}}</td>
+            <td>{{this.Zip}}</td>
+            <td>{{this.Phone}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+
+
