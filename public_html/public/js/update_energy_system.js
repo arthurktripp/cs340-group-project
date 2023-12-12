@@ -1,6 +1,8 @@
 // update_energy_system.js
-// Adapted from nodejs-starter-app
-// ADD Code Citation info
+
+// Constructed using course materials in CS340
+// accessed 12/9/2023
+// Adapted from https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 // Target the edit form:
 let updateSystemForm = document.getElementById('es-edit-form');

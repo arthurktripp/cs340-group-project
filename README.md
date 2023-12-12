@@ -1,10 +1,11 @@
-CS340 Intro to Databases
-Group Project - Renewable Energy Systems Supply
-Liam Robbins & Arthur Tripp
+# CS340 Intro to Databases
+**Group Project - Renewable Energy Systems Supply**
+**Liam Robbins & Arthur Tripp**
 
-This quarter-long project is a database running on MariaDB with a website front-end. We are demonstrating CRUD functions across several tables, and managing 1:M & M:N relationships between them.
+This quarter-long project is a database running on MariaDB with a website front-end. We are demonstrating CRUD functions across several tables, and managing several 1:M & M:N relationships between them.
 
-We'll be using MySQL, HTML, CSS, Javascript (including Vanilla, Node.js and Handlebars).
+Our application runs on javascript, including **Node.js**, **handlebars.js**, and our vanilla code includes **AJAX**. **HTML**, **CSS**, and **SQL** are included as well. 
 
-Note the adaptation of code provided as CS340 resources.
-Also note the occasional (clearly commented) use of tablesgenerator.com.
+This was built for Oregon Stat University's CS340 - Intro to Databases course. Much of this code was adapted from course materials, especially hosted at https://github.com/osu-cs340-ecampus/nodejs-starter-app. We also made use of the wonderful time-saving tool at https://tablesgenerator.com/ to construct to bones of our tables.
+
+*Last updated: 10/11/23*

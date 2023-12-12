@@ -1,3 +1,7 @@
+// Constructed using course materials in CS340
+// accessed 12/9/2023
+// Adapted from https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 /* add_energy_system.js*/
 
 /* *****************************

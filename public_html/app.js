@@ -1,6 +1,7 @@
 
 // Constructed using course materials in CS340
 // Adapted from provided materials at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+// Accessed 12/9/2023
 
 
 // app.js
