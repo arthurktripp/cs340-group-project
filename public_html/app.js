@@ -1,6 +1,8 @@
 
 // Constructed using course materials in CS340
-// Adapted from provided materials
+// Adapted from provided materials at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
+
 // app.js
 
 /* ************************
@@ -287,19 +289,15 @@ app.post('/add-energy-system-ajax', function(req, res){
         `SELECT * FROM EnergySystems`;
       db.pool.query(query2, function(error, rows, fields) {
         // check for an error:
-        if (error) {
-          console.log(error);
-          res.sendStatus(400);
-        } else {
+        if (error) {console.log(error); res.sendStatus(400);}
+        else {
           res.send(rows);
 
           // Get the systemID of the system we just added
           query3 = `SELECT MAX(systemID) as maxID from EnergySystems`;
           db.pool.query(query3, function(error, rows, fields) {
-            if (error) {
-              console.log(error)
-              res.sendStatus(400);
-            } else {
+            if (error) {console.log(error); res.sendStatus(400);}
+            else {
               var newEnergySystemID = rows[0]['maxID']; 
             }
 
@@ -314,10 +312,7 @@ app.post('/add-energy-system-ajax', function(req, res){
                   ${newEnergySystemPartID});`
                 
               db.pool.query(query4, function(error, rows, fields) {
-                if (error) {
-                  console.log(error)
-                  res.sendStatus(400);
-                } 
+                if (error) {console.log(error); res.sendStatus(400);} 
               })
             })
           })
@@ -339,12 +334,6 @@ app.put('/put-energy-system-ajax', function(req, res) {
   if (isNaN(estimatedCustomerIncome)){
     estimatedCustomerIncome = "NULL";
   }
-
-  let autocommitOff = 
-    `SET AUTOCOMMIT = 0;`
-
-  let commitChanges = 
-    `COMMIT`
 
   let queryUpdateValues = 
     `UPDATE EnergySystems
@@ -410,27 +399,19 @@ app.put('/put-energy-system-ajax', function(req, res) {
         let existingSystemPartsCount = rows;
         existingSystemPartsCount = (existingSystemPartsCount[0].existingCount);
 
+        // When a user changes the associated parts, and there are the same or fewer parts,
+        // we will delete any unneeded parts then update the rest.
         if (data.updatedSystemPartsCount <= existingSystemPartsCount) {
-          // RUN DELETE QUERY numToRemove TIMES
-          /*
-            for (numToRemove; numToRemove > 0; numToRemove--) {
-              db.pool.query(queryDeleteSystemParts, data.systemID, function(error, rows, fields){
-                if (error) {console.log(error); res.sendStatus(400);};
-              });
-            };
-          */
-          
-
           let numToRemove = (existingSystemPartsCount - data.updatedSystemPartsCount);
+          // had trouble passing in the right values here, so I've 
+          // included the query directly here.
           db.pool.query(`
             DELETE FROM SystemParts 
             WHERE systemID = ${data.systemID}
             ORDER BY systemID
             LIMIT ${numToRemove};`,
             function(error) {
-              if (error){
-                console.log(error); sendStatus(400)
-              }
+              if (error){console.log(error); sendStatus(400)};
             
             // Get a list of the remaining parts to update
             db.pool.query(queryGetSystemPartsPartID, function(error, rows, fields) {
@@ -463,7 +444,8 @@ app.put('/put-energy-system-ajax', function(req, res) {
               }
             })
           });
-        } else { // UPDATE with more associations than initially set
+        } else { 
+          // UPDATE with more associations than initially set
           // first update the existing associations to match submitted values
           let i = data.updatedSystemPartsCount;
           let countUp = 0;
@@ -495,11 +477,11 @@ app.put('/put-energy-system-ajax', function(req, res) {
                 VALUES (${data.systemID}, ${addPartsID});`,
                   function(error, rows, fields){
                   if (error) {console.log(error); res.sendStatus(400);};
-                  })
-            }
-          })
-        } 
-      }
+              });
+            };
+          });
+        };
+      };
     });
   });
 });
