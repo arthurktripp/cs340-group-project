@@ -8,33 +8,104 @@
 
 -- select stockParts for all parts associated with a system, then return the minimum.
 -- Used to display maximum number of possible systems to be built
+-- Not implemented
 SELECT
 	MIN(Parts.stockTotal) AS Max_Possible_Systems
 FROM EnergySystems
 	INNER JOIN SystemParts ON SystemParts.systemID = EnergySystems.systemID
 	INNER JOIN Parts ON Parts.partID = SystemParts.partID
-WHERE EnergySystems.SystemID = :SystemIDInput; -- could use name instead
+WHERE EnergySystems.SystemID = :SystemIDInput;
 
 -- select
 SELECT * FROM EnergySystems;
 
+-- LEFT JOIN includes all parts once, regardless of attachment to system
+-- CASE statement adds an identifier for inclusion in the specified system. 
+-- The front end uses "checked" = BOOL to autocheck the right boxes for parts.
+SELECT
+Parts.partName,
+Parts.partID,
+CASE
+	WHEN SystemParts.systemID IS NULL THEN "false"
+	ELSE "true"
+END AS checked
+FROM Parts
+LEFT JOIN SystemParts 
+	ON SystemParts.partID = Parts.partID
+	AND SystemParts.systemID = "${req.query.systemID}"
+ORDER BY categoryID ASC, partName ASC;
+	
+-- used to add a list of all available parts
+SELECT
+	partID	 
+FROM SystemParts
+WHERE systemID = "${req.query.systemID}";
+
 -- insert
 -- create a new EnergySystem
-INSERT INTO EnergySystems(
-	systemName, systemDescription, estimatedInstallTime, estimatedCustomerIncome)
-	VALUES (
-		:systemNameInput,
-		:systemDescriptionInput, 
-		:estimatedInstallTimeInput, 
-		:estimatedCustomerIncomeInput);
--- update not needed
+-- The backend creates a new system then gets its energySystemID
+-- to add associations to the intersection table.
+INSERT
+INTO EnergySystems(
+	systemName,
+	systemDescription,
+	estimatedInstallTime,
+	estimatedCustomerIncome)
+VALUES (
+	'${data['systemName']}',
+	'${data['systemDescription']}', 
+	'${estimatedInstallTime}',
+	'${estimatedCustomerIncome}');
+
+SELECT * FROM EnergySystems;
+
+SELECT MAX(systemID) as maxID from EnergySystems;
+
+INSERT INTO SystemParts
+	(systemID, partID)
+VALUES (
+	${newEnergySystemID},
+	${newEnergySystemPartID});
+
+-- update
+
+UPDATE EnergySystems
+SET
+	systemName = '${data.systemName}',
+	systemDescription = '${data.systemDescription}',
+	estimatedInstallTime = ${estimatedInstallTime},
+	estimatedCustomerIncome = ${estimatedCustomerIncome}
+WHERE
+	systemID = ${data.systemID};
+
+SELECT
+	COUNT(*) as 'existingCount'
+FROM SystemParts
+WHERE systemID = ${data.systemID};
+
+SELECT 
+	partID as 'partsToUpdate',
+	systemPartsID as 'systemPartsID'
+FROM SystemParts
+WHERE   systemID = ${data.systemID}
+ORDER BY partsToUpdate;
+
+-- Deletes intersections if needed, then updates any
+-- existing SystemParts intersections, before adding more if needed.
+UPDATE SystemParts 
+  SET partID = ${data.updatedPartIDValues[newPartID]}
+  WHERE systemID = ${data.systemID} AND partID = ${partToUpdate};
 
 -- delete
 DELETE FROM EnergySystems
-WHERE systemID = :systemIDInput; --Could use name instead
+WHERE systemID = :systemIDInput;
 
 
--- PartCategories entity
+
+-- ----------------------------------
+-- **** PartCategories entity **** --
+-- ----------------------------------
+
 -- select
 SELECT * FROM PartCategories;
 
@@ -78,7 +149,7 @@ WHERE partName = :partNameInput;
 -- ****    Parts entity ****    
 -- ----------------------------------
 
--- select
+-- select if no query
 SELECT
 	partID as "ID",
 	partName as "Name",
@@ -95,13 +166,15 @@ LEFT JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID;
 
 -- select by categoryID
 SELECT
-	partID, 
-	partName, 
-	partDescription, 
-	stockTotal, 
-	partCost, 
-	PartCategories.categoryName, 
-	Warehouses.cityLocation 
+	partID as "ID",
+	partName as "Name",
+	partDescription as "Description",
+	stockTotal as "Stock",
+	partCost as "Cost",
+	PartCategories.categoryName as "Category",
+	Warehouses.cityLocation as "Warehouse",
+	PartCategories.categoryID as "",
+	Warehouses.warehouseID as ""
 FROM Parts
 	INNER JOIN Warehouses ON Warehouses.warehouseID = Parts.warehouseID
 	INNER JOIN PartCategories ON PartCategories.categoryID = Parts.categoryID
@@ -133,7 +206,8 @@ SELECT * FROM PartCategories;
 SELECT 
 	warehouseID as "ID",
 	cityLocation as "City"
-FROM Warehouses;
+FROM Warehouses
+;
 
 -- ----------------------------------
 -- **** SystemParts entity **** 
@@ -148,9 +222,8 @@ SELECT
 	Parts.partName 
 FROM SystemParts
 	INNER JOIN EnergySystems ON EnergySystems.systemID = SystemParts.systemID
-	INNER JOIN Parts ON Parts.partID = SystemParts.partID;
-
-
+	INNER JOIN Parts ON Parts.partID = SystemParts.partID
+;
 
 -- insert
 INSERT INTO SystemParts
@@ -168,7 +241,6 @@ WHERE
 	systemID = systemID
 ;
 
-
--- delete...just in case
+-- delete
 DELETE FROM SystemParts
 WHERE partID = :partIDInput AND systemID = :systemIDInput;
