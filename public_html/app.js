@@ -678,6 +678,148 @@ app.delete('/delete-intersection-ajax/', function(req,res,next){
       }
 })});
 
+app.get('/reset-database', function(req, res){
+  db.pool.query('SET FOREIGN_KEY_CHECKS = 0', function(error){
+    if (error) {console.log(error)};
+  db.pool.query(`DROP TABLE SystemParts;`, function(error){
+    if (error) {console.log(error)};
+    db.pool.query(`DROP TABLE Parts;`, function(error){
+      if (error) {console.log(error)};
+      db.pool.query(`DROP TABLE Warehouses;`, function(error){
+        if (error) {console.log(error)};
+        db.pool.query(`DROP TABLE PartCategories;`, function(error){
+          if (error) {console.log(error)};
+          db.pool.query(`DROP TABLE EnergySystems;`, function(error){
+            if (error) {console.log(error)};
+            db.pool.query(`CREATE TABLE EnergySystems (
+              systemID INT(11) NOT NULL AUTO_INCREMENT,
+              systemName VARCHAR(255) NOT NULL UNIQUE,
+              systemDescription VARCHAR(500),
+              estimatedInstallTime INT(11),
+              estimatedCustomerIncome INT(11),
+              PRIMARY KEY (systemID)
+          );`, function(error){
+            if(error){console.log(error)};
+            db.pool.query(`CREATE TABLE PartCategories (
+              categoryID INT(11) NOT NULL AUTO_INCREMENT,
+              categoryName VARCHAR(255) NOT NULL UNIQUE,
+              PRIMARY KEY (categoryID)
+          );`, function(error){
+            if (error) {console.log(error)};
+            db.pool.query(`CREATE TABLE Warehouses (
+              warehouseID INT(11) NOT NULL AUTO_INCREMENT,
+              phoneNumber VARCHAR(15),
+              addressLine1 VARCHAR(255) NOT NULL,
+              addressLine2 VARCHAR(255),
+              cityLocation VARCHAR(255) NOT NULL UNIQUE,
+              stateLocation VARCHAR(255) NOT NULL,
+              zipCode VARCHAR(9) NOT NULL,
+              PRIMARY KEY (warehouseID));`, function(error){
+                if(error){console.log(error)};
+                db.pool.query(`CREATE TABLE Parts (
+                  partID INT(11) NOT NULL AUTO_INCREMENT,
+                  partName VARCHAR(255) NOT NULL UNIQUE,
+                  partDescription VARCHAR(500),
+                  stockTotal INT(11) NOT NULL,
+                  partCost DECIMAL(5,2) NOT NULL,
+                  categoryID INT(11) NOT NULL,
+                  warehouseID INT(11),
+                  PRIMARY KEY(partID),
+                  FOREIGN KEY (categoryID) REFERENCES PartCategories(categoryID),
+                  FOREIGN KEY (warehouseID) REFERENCES Warehouses(warehouseID));`, function(error){
+                    if (error) {console.log(error)};
+                    db.pool.query(`CREATE TABLE SystemParts (
+                      systemPartsID INT(11) NOT NULL AUTO_INCREMENT,
+                      systemID INT(11) NOT NULL,
+                      partID INT(11) NOT NULL,
+                      PRIMARY KEY(systemPartsID),
+                      FOREIGN KEY (systemID) REFERENCES EnergySystems(systemID) ON DELETE CASCADE,
+                      FOREIGN KEY (partID) REFERENCES Parts(partID) ON DELETE CASCADE
+                  );`, function(error){
+                    if (error) {console.log(error)};
+            
+            
+            db.pool.query(`INSERT INTO EnergySystems (systemName, systemDescription, estimatedInstallTime, estimatedCustomerIncome)
+            VALUES ("Small Solar", "This is a small solar panel system.", 60, 101),
+            ("Medium Solar", "This is a medium solar panel system.", 120, 200),
+            ("Big Solar", "This is a large solar panel system.", 180, 300),
+            ("Big Solar Alternate", "Testing the inclusion of parts.", 150, 280),
+            ("Anitas Custom System", "Custom setup for a studio apartment", 61, 25),
+            ("RV Solar System", "Mounted solar panel system designed for RVs and vans.", 92, 0),
+            ("HydroPower System", "Home Hydropower generator with energy storage.", 240, 40);`, function(error){
+              if (error) {console.log(error)};
+              db.pool.query(`INSERT INTO PartCategories (categoryName)
+              VALUES ("Battery"), ("Cable"), ("Solar Panel"), ("Generator"), ("Roof Mount");`, function(error){
+                if (error) {console.log(error)};
+                db.pool.query(`INSERT INTO Warehouses (phoneNumber, addressLine1, addressLine2, cityLocation, stateLocation, zipCode)
+                VALUES (1234567890, "123 Windy Ave.", NULL, "Austin", "Texas", 12345),
+                (NULL, "456 Gusty Blvd.", NULL, "Portland", "Oregon", 54321), 
+                (5432109876, "789 Breezy St.", NULL, "New Orleans", "Louisiana", 13579),
+                (5135551234, "3231 Cincinnati-Dayton Highway", "Suite 4", "Cincinnati", "Ohio", 45032);`, function(error){
+                  if (error) {console.log(error)};
+                  db.pool.query(`INSERT INTO Parts (partName, partDescription, stockTotal, partCost, categoryID, warehouseID)
+                  VALUES ("Standard cable", "Used in many systems to connect various parts.", 300, 20.99, 2, 2), 
+                  ("Small solar panel", "Solar Panel for small houses or RVs", 50, 15.97, 3, 2), 
+                  ("Large solar panel", "Solar panel for houses and businesses", 50, 100, 3, 2), 
+                  ("High voltage cable", "Rated for 240v", 30, 25.99, 2, 2), 
+                  ("Large Battery", "30kWh full day of avg household use", 24, 900, 1, 2), 
+                  ("Small Battery", "1kWh", 50, 120, 1, 1), 
+                  ("Water Wheel Turbine", "Generates power when placed in running water", 16, 800, 4, 2), 
+                  ("Medium Battery", "12kWh, enough for a house to get through the night.", 48, 600, 1, 3), 
+                  ("RV Solar Mount", "Mounting system for RVs and large vans.", 120, 90, 5, 4), 
+                  ("Home Solar Mount Large", "Mounts a large solar panel to a roof", 120, 110, 5, 4), 
+                  ("Home Solar Mount Small", "Mounts a small solar panel to a home roof", 180, 80, 5, 4);`, function(error){
+                    if (error) {console.log(error)};
+                    db.pool.query(`INSERT INTO SystemParts (systemID, partID)
+                    VALUES (3, 4),(4, 4),(4, 4),(7, 4),(6, 4),(2, 11),(7, 5),(2, 5),(6, 5),(6, 8),(1, 6),
+                        (5, 2),(2, 2),(6, 2),(1, 2),(5, 1),(2, 1),(1, 1),(7, 7);`, function(error){
+                          if (error) {console.log(error)};
+                          res.redirect('/');
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+})
+})
+})
+})
+})
+})
+});
+
+
+
+
+
+
+/*
+app.get('/reset-database', function(req, res, next){
+  db.pool.query(dbReset.prepareDelete, function(error, rows, fields) {
+    if (error){ console.log(error); res.sendStatus(400);
+    } else {
+      db.pool.query(dbReset.resetQuery, function(error, rows, fields){
+        if (error){ console.log(error); res.sendStatus(400);
+        } else {
+          db.pool.query(dbReset.commitQuery, function(error, rows, fields) {
+            if (error){ console.log(error); res.sendStatus(400)
+            } else {
+              res.sendStatus(204);
+              res.redirect('/index');
+            };
+          });
+        };
+      });
+    };
+  });
+});
+*/
+
 /*
   LISTENER
 */

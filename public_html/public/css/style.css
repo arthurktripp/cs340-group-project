@@ -19,6 +19,9 @@ nav li {
   padding: 1em 1.5em;
   background-color: #a3e1c4;
 }
+nav li.reset-db {
+  background-color: #a8d7c1;
+}
 a.nav-active li,
 nav li:hover {
   background-color: #7ed5ac;
@@ -28,6 +31,8 @@ nav a {
   color: #333;
   text-decoration: none;
 }
+
+
 
 header {
   padding: 1em 2em;
